@@ -453,3 +453,60 @@ def delete_insumo(insumo_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# ============= ENDPOINTS DE CLIENTES =============
+
+@app.get("/clientes")
+def get_clientes(limit: Optional[int] = 100):
+    try:
+        clientes = list(config.clientes_collection.find().limit(limit))
+        return {"data": [serialize_doc(c) for c in clientes]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/clientes/{cliente_id}")
+def get_cliente(cliente_id: str):
+    try:
+        cliente = config.clientes_collection.find_one({"_id": ObjectId(cliente_id)})
+        if not cliente:
+            raise HTTPException(status_code=404, detail="Cliente no encontrado")
+        return {"data": serialize_doc(cliente)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/clientes")
+def create_cliente(cliente: dict):
+    try:
+        from datetime import datetime
+        cliente["fecha_registro"] = datetime.utcnow().isoformat()
+        result = config.clientes_collection.insert_one(cliente)
+        nuevo = config.clientes_collection.find_one({"_id": result.inserted_id})
+        return {"success": True, "data": serialize_doc(nuevo)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.put("/clientes/{cliente_id}")
+def update_cliente(cliente_id: str, data: dict):
+    try:
+        existing = config.clientes_collection.find_one({"_id": ObjectId(cliente_id)})
+        if not existing:
+            raise HTTPException(status_code=404, detail="Cliente no encontrado")
+        config.clientes_collection.update_one({"_id": ObjectId(cliente_id)}, {"$set": data})
+        actualizado = config.clientes_collection.find_one({"_id": ObjectId(cliente_id)})
+        return {"success": True, "data": serialize_doc(actualizado)}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/clientes/{cliente_id}")
+def delete_cliente(cliente_id: str):
+    try:
+        cliente = config.clientes_collection.find_one({"_id": ObjectId(cliente_id)})
+        if not cliente:
+            raise HTTPException(status_code=404, detail="Cliente no encontrado")
+        config.clientes_collection.delete_one({"_id": ObjectId(cliente_id)})
+        return {"success": True, "message": "Cliente eliminado correctamente"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

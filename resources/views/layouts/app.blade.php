@@ -845,9 +845,9 @@
                     </a>
                     
                     <!-- ===== NUEVA OPCIÓN DE INVENTARIO PARA CLIENTE (SOLO VER) ===== -->
-                    <a href="/inventario/cliente" class="menu-item {{ request()->is('inventario/cliente') ? 'active' : '' }}">
+                    <a href="clientes" class="menu-item {{ request()->is('clientes') ? 'active' : '' }}">
                         <i class="fas fa-boxes"></i>
-                        <span class="menu-text">Disponibilidad</span>
+                        <span class="menu-text">Crear Cliente</span>
                     </a>
                     
                     <a href="{{ URL('/carrito') }}" class="menu-item {{ request()->is('carrito') ? 'active' : '' }}">

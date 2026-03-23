@@ -370,10 +370,20 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
 <style>
     /* ===== ESTILOS GENERALES ===== */
+    :root {
+        --azul_1: #457b9d;
+        --azul_2: #132d46;
+        --azul_3: #a8dadc;
+        --blanco: #f1faee;
+        --verde_azul: #07cdaf;
+        --amarillo_claro: #fffaca;
+        --amarillo: #e0d205;
+    }
+
     .carrito-container {
         position: relative;
         min-height: 100vh;
-        background: linear-gradient(145deg, #faf0e6 0%, #f5e6d3 100%);
+        background: linear-gradient(145deg, #e8f4f8 0%, #d0eaf0 100%);
         font-family: 'Poppins', 'Segoe UI', sans-serif;
         padding: 20px 0;
         overflow-x: hidden;
@@ -427,7 +437,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         position: absolute;
         width: 15px;
         height: 7px;
-        background: #8B4513;
+        background: var(--azul_2);
         border-radius: 50%;
         opacity: 0.1;
         animation: float 20s infinite linear;
@@ -449,7 +459,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         position: absolute;
         width: 3px;
         height: 3px;
-        background: rgba(139,69,19,0.2);
+        background: rgba(19,45,70,0.2);
         border-radius: 50%;
         animation: particle-float 15s infinite linear;
     }
@@ -468,11 +478,11 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
         border-radius: 30px;
-        box-shadow: 0 20px 40px rgba(139, 69, 19, 0.15);
+        box-shadow: 0 20px 40px rgba(19, 45, 70, 0.15);
         position: relative;
         z-index: 10;
         overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.3);
+        border: 1px solid rgba(168,218,220,0.3);
         animation: fadeInUp 0.8s ease;
     }
 
@@ -483,7 +493,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     /* ===== HEADER ===== */
     .carrito-header {
-        background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+        background: linear-gradient(135deg, var(--azul_2) 0%, var(--azul_1) 100%);
         color: white;
         padding: 25px 30px;
         display: flex;
@@ -563,8 +573,8 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     }
 
     .carrito-table thead th {
-        background: #f8f4f0;
-        color: #5D4037;
+        background: linear-gradient(135deg, var(--azul_2), var(--azul_1));
+        color: white;
         font-weight: 600;
         padding: 16px;
         border: none;
@@ -576,7 +586,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     .carrito-table thead th i {
         margin-right: 8px;
-        color: #8B4513;
+        color: var(--azul_3);
     }
 
     .carrito-table tbody tr {
@@ -588,7 +598,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     .carrito-table tbody tr:hover {
         transform: translateY(-4px);
-        box-shadow: 0 15px 30px rgba(139,69,19,0.15);
+        box-shadow: 0 15px 30px rgba(19,45,70,0.15);
     }
 
     .carrito-table tbody td {
@@ -616,12 +626,12 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     .producto-img-placeholder {
         width: 70px;
         height: 70px;
-        background: linear-gradient(145deg, #f0e4d5, #e8d5c0);
+        background: linear-gradient(145deg, var(--azul_3), #7ecfd1);
         border-radius: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #8B4513;
+        color: var(--azul_2);
         font-size: 2rem;
     }
 
@@ -638,7 +648,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     }
 
     .stock-info {
-        color: #27ae60;
+        color: var(--verde_azul);
         font-size: 0.85rem;
         display: flex;
         align-items: center;
@@ -648,21 +658,21 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     /* Precios */
     .precio-cell {
         font-weight: 600;
-        color: #8B4513;
+        color: var(--azul_1);
         font-size: 1.1rem;
     }
 
     .subtotal-cell {
         font-weight: 700;
-        color: #27ae60;
+        color: var(--verde_azul);
         font-size: 1.1rem;
     }
 
     .total-cell {
         font-size: 1.3rem;
         font-weight: 700;
-        color: #8B4513;
-        background: linear-gradient(145deg, #fff3e0, #ffe9d4);
+        color: var(--azul_2);
+        background: linear-gradient(145deg, var(--azul_3), #7ecfd1);
         padding: 8px 20px;
         border-radius: 50px;
         display: inline-block;
@@ -673,7 +683,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         display: flex;
         align-items: center;
         gap: 5px;
-        background: #f8f4f0;
+        background: var(--azul_3);
         border-radius: 30px;
         padding: 3px;
         width: fit-content;
@@ -684,7 +694,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         height: 35px;
         border: none;
         background: white;
-        color: #8B4513;
+        color: var(--azul_1);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -695,7 +705,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     }
 
     .btn-cantidad:hover {
-        background: #8B4513;
+        background: var(--azul_1);
         color: white;
         transform: scale(1.1);
     }
@@ -734,7 +744,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         align-items: center;
         margin-top: 30px;
         padding-top: 20px;
-        border-top: 2px dashed #e8d5c0;
+        border-top: 2px dashed #c0dce8;
     }
 
     .actions-left, .actions-right {
@@ -761,8 +771,8 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     }
 
     .btn-seguir {
-        background: #f0e4d5;
-        color: #8B4513;
+        background: #e8f4f8;
+        color: var(--azul_1);
         padding: 12px 25px;
         border-radius: 50px;
         text-decoration: none;
@@ -774,13 +784,13 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     }
 
     .btn-seguir:hover {
-        background: #e8d5c0;
+        background: #c0dce8;
         transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(139,69,19,0.2);
+        box-shadow: 0 10px 20px rgba(19,45,70,0.2);
     }
 
     .btn-pagar {
-        background: linear-gradient(135deg, #27ae60, #2ecc71);
+        background: linear-gradient(135deg, var(--verde_azul), #05b89a);
         color: white;
         padding: 12px 30px;
         border-radius: 50px;
@@ -800,7 +810,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     /* ===== RESUMEN ===== */
     .carrito-resumen {
-        background: #f8f4f0;
+        background: var(--azul_3);
         border-radius: 20px;
         padding: 20px;
         margin-top: 30px;
@@ -812,7 +822,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         display: flex;
         justify-content: space-between;
         padding: 10px 0;
-        color: #5D4037;
+        color: var(--azul_2);
     }
 
     .resumen-item.total {
@@ -821,11 +831,11 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         padding-top: 15px;
         font-size: 1.2rem;
         font-weight: 700;
-        color: #8B4513;
+        color: var(--azul_1);
     }
 
     .text-success {
-        color: #27ae60;
+        color: var(--verde_azul);
         font-weight: 600;
     }
 
@@ -838,14 +848,14 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     .empty-cart-icon {
         width: 120px;
         height: 120px;
-        background: linear-gradient(145deg, #f0e4d5, #e8d5c0);
+        background: linear-gradient(145deg, #e8f4f8, #c0dce8);
         border-radius: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 25px;
         font-size: 3.5rem;
-        color: #8B4513;
+        color: var(--azul_1);
         animation: pulse 2s infinite;
     }
 
@@ -855,7 +865,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     }
 
     .empty-cart h3 {
-        color: #8B4513;
+        color: var(--azul_1);
         font-size: 1.8rem;
         margin-bottom: 10px;
     }
@@ -870,7 +880,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        background: linear-gradient(135deg, #8B4513, #A0522D);
+        background: linear-gradient(135deg, var(--azul_2), var(--azul_1));
         color: white;
         padding: 15px 40px;
         border-radius: 50px;
@@ -894,7 +904,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     .header-decoration {
         font-size: 2rem;
-        color: #8B4513;
+        color: var(--azul_1);
         margin-bottom: 10px;
     }
 
@@ -905,11 +915,11 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     .header-decoration i:nth-child(2) {
         animation-delay: 0.3s;
-        color: #27ae60;
+        color: var(--verde_azul);
     }
 
     .seccion-header h3 {
-        color: #8B4513;
+        color: var(--azul_1);
         font-weight: 700;
         margin-bottom: 5px;
     }
@@ -932,12 +942,12 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
         overflow: hidden;
         box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         transition: all 0.3s ease;
-        border: 1px solid rgba(139,69,19,0.1);
+        border: 1px solid rgba(19,45,70,0.1);
     }
 
     .producto-mini-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(139,69,19,0.15);
+        box-shadow: 0 15px 30px rgba(19,45,70,0.15);
     }
 
     .producto-mini-imagen {
@@ -954,12 +964,12 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     .mini-placeholder {
         width: 100%;
         height: 100%;
-        background: linear-gradient(145deg, #f0e4d5, #e8d5c0);
+        background: linear-gradient(145deg, #e8f4f8, #c0dce8);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 2.5rem;
-        color: #8B4513;
+        color: var(--azul_1);
     }
 
     .producto-mini-info {
@@ -976,7 +986,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     .mini-precio {
         display: block;
         font-weight: 700;
-        color: #27ae60;
+        color: var(--verde_azul);
         font-size: 1.1rem;
         margin-bottom: 5px;
     }
@@ -990,7 +1000,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     .btn-agregar-mini {
         width: 100%;
-        background: linear-gradient(135deg, #8B4513, #A0522D);
+        background: linear-gradient(135deg, var(--azul_2), var(--azul_1));
         color: white;
         border: none;
         padding: 8px;
@@ -1027,7 +1037,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     .producto-card-sugerido:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(139,69,19,0.15);
+        box-shadow: 0 15px 30px rgba(19,45,70,0.15);
     }
 
     .producto-imagen-sugerido {
@@ -1045,12 +1055,12 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     .sugerido-placeholder {
         width: 100%;
         height: 100%;
-        background: linear-gradient(145deg, #f0e4d5, #e8d5c0);
+        background: linear-gradient(145deg, #e8f4f8, #c0dce8);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 3rem;
-        color: #8B4513;
+        color: var(--azul_1);
     }
 
     .badge-stock-bajo {
@@ -1091,14 +1101,14 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     .sugerido-precio {
         font-weight: 700;
-        color: #27ae60;
+        color: var(--verde_azul);
         font-size: 1.2rem;
     }
 
     .btn-agregar-sugerido {
         width: 40px;
         height: 40px;
-        background: linear-gradient(135deg, #8B4513, #A0522D);
+        background: linear-gradient(135deg, var(--azul_2), var(--azul_1));
         color: white;
         border: none;
         border-radius: 50%;
@@ -1116,8 +1126,8 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
 
     .btn-ver-mas {
         display: inline-block;
-        background: #f0e4d5;
-        color: #8B4513;
+        background: #e8f4f8;
+        color: var(--azul_1);
         padding: 12px 30px;
         border-radius: 50px;
         text-decoration: none;
@@ -1126,10 +1136,10 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     }
 
     .btn-ver-mas:hover {
-        background: #8B4513;
+        background: var(--azul_1);
         color: white;
         transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(139,69,19,0.2);
+        box-shadow: 0 10px 20px rgba(19,45,70,0.2);
     }
 
     /* ===== ALERTAS ===== */
@@ -1167,7 +1177,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     .carrito-footer {
         padding: 15px;
         text-align: center;
-        border-top: 2px dashed #e8d5c0;
+        border-top: 2px dashed #c0dce8;
     }
 
     .coffee-beans-footer {
@@ -1179,7 +1189,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
     .coffee-beans-footer span {
         width: 12px;
         height: 18px;
-        background: #8B4513;
+        background: var(--azul_1);
         border-radius: 50%;
         transform: rotate(45deg);
         animation: bounce-footer 2s infinite;
@@ -1234,7 +1244,7 @@ document.querySelectorAll('.input-cantidad').forEach(input => {
             position: absolute;
             left: 15px;
             font-weight: 600;
-            color: #8B4513;
+            color: var(--azul_1);
             text-transform: uppercase;
             font-size: 0.85rem;
         }

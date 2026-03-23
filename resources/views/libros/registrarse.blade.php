@@ -153,8 +153,8 @@
                     <div class="input-container">
                         <i class="fas fa-user-tag input-icon"></i>
                         <select id="user_tipo" name="user_tipo" class="form-control select-control" required>
-                            <option value="0">Empleado</option>
-                            <option value="1">Invitado</option>
+                            <option value="0">Administrador</option>
+                            <option value="1">Empleado</option>
                         </select>
                         <label for="user_tipo" class="select-label">Tipo de Usuario</label>
                     </div>
@@ -162,14 +162,14 @@
                         <div class="role-option" data-role="0">
                             <i class="fas fa-crown"></i>
                             <div>
-                                <strong>Empleado</strong>
+                                <strong>Administrador</strong>
                                 <span>Acceso completo al sistema</span>
                             </div>
                         </div>
                         <div class="role-option" data-role="1">
                             <i class="fas fa-user"></i>
                             <div>
-                                <strong>Invitado</strong>
+                                <strong>Empleado</strong>
                                 <span>Acceso limitado a funciones básicas</span>
                             </div>
                         </div>
@@ -251,7 +251,7 @@
                     <div class="type-card admin">
                         <i class="fas fa-crown"></i>
                         <div>
-                            <h5>Empleado</h5>
+                            <h5>Administrador</h5>
                             <ul>
                                 <li>Gestión completa de usuarios</li>
                                 <li>Control de inventario</li>
@@ -263,7 +263,7 @@
                     <div class="type-card guest">
                         <i class="fas fa-user"></i>
                         <div>
-                            <h5>Invitado</h5>
+                            <h5>Empleado</h5>
                             <ul>
                                 <li>Consulta de productos</li>
                                 <li>Realización de pedidos</li>
@@ -279,9 +279,23 @@
 </div>
 
 <style>
+    :root {
+        --azul_1: #457b9d;
+        --azul_2: #132d46;
+        --azul_3: #a8dadc;
+        --azul_fuerte: #132d46;
+        --blanco: #f1faee;
+        --negrito: #151613;
+        --negrito_verde: #191e29;
+        --verde_azul: #07cdafff;
+        --amarillo_claro: #fffaca;
+        --amarillo: #e0d205;
+        --verde_obs: #004f39;
+    }
+
     .coffee-register-container {
         min-height: 100vh;
-        background: linear-gradient(135deg, #f8f4f0 0%, #f5f1e8 50%, #f0e6d6 100%);
+        background: linear-gradient(135deg, var(--blanco) 0%, var(--azul_3) 50%, var(--azul_1) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -305,7 +319,7 @@
         position: absolute;
         width: 20px;
         height: 10px;
-        background: #8B4513;
+        background: var(--azul_2);
         border-radius: 50%;
         opacity: 0.1;
         animation: float 15s infinite linear;
@@ -365,12 +379,12 @@
 
     /* Tarjeta de registro */
     .coffee-register-card {
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(241, 250, 238, 0.95);
         backdrop-filter: blur(10px);
         border-radius: 20px;
         padding: 2.5rem;
-        box-shadow: 0 20px 40px rgba(139, 69, 19, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 40px rgba(19, 45, 70, 0.15);
+        border: 1px solid rgba(168, 218, 220, 0.3);
     }
 
     /* Header */
@@ -382,13 +396,13 @@
     .register-icon {
         width: 80px;
         height: 80px;
-        background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+        background: linear-gradient(135deg, var(--azul_2) 0%, var(--azul_1) 100%);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 1.5rem;
-        box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
+        box-shadow: 0 10px 25px rgba(19, 45, 70, 0.3);
     }
 
     .register-icon i {
@@ -397,14 +411,14 @@
     }
 
     .register-header h1 {
-        color: #5D4037;
+        color: var(--azul_2);
         font-size: 2rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
     }
 
     .register-header p {
-        color: #8D6E63;
+        color: var(--azul_1);
         font-size: 1.1rem;
         margin: 0;
     }
@@ -428,7 +442,7 @@
         left: 15px;
         top: 50%;
         transform: translateY(-50%);
-        color: #8B4513;
+        color: var(--azul_1);
         font-size: 1.1rem;
         z-index: 2;
         transition: all 0.3s ease;
@@ -442,7 +456,7 @@
         font-size: 1rem;
         background: white;
         transition: all 0.3s ease;
-        color: #5D4037;
+        color: var(--azul_2);
         font-family: inherit;
     }
 
@@ -453,8 +467,8 @@
 
     .form-control:focus {
         outline: none;
-        border-color: #8B4513;
-        box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        border-color: var(--azul_1);
+        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
         transform: translateY(-2px);
     }
 
@@ -467,7 +481,7 @@
         font-size: 0.8rem;
         background: white;
         padding: 0 8px;
-        color: #8B4513;
+        color: var(--azul_1);
     }
 
     .input-label,
@@ -491,7 +505,7 @@
         transform: translateY(-50%);
         background: none;
         border: none;
-        color: #8B4513;
+        color: var(--azul_1);
         cursor: pointer;
         padding: 5px;
         border-radius: 4px;
@@ -583,27 +597,27 @@
     }
 
     .role-option:hover {
-        border-color: #8B4513;
+        border-color: var(--azul_1);
         transform: translateY(-2px);
     }
 
     .role-option.active {
-        border-color: #8B4513;
-        background: #FFF8E1;
+        border-color: var(--azul_1);
+        background: var(--amarillo_claro);
     }
 
     .role-option i {
-        color: #8B4513;
+        color: var(--azul_1);
         font-size: 1.2rem;
     }
 
     .role-option strong {
-        color: #5D4037;
+        color: var(--azul_2);
         font-size: 0.9rem;
     }
 
     .role-option span {
-        color: #8D6E63;
+        color: var(--azul_1);
         font-size: 0.8rem;
     }
 
@@ -611,8 +625,8 @@
     .register-btn {
         width: 100%;
         padding: 15px;
-        background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
-        color: white;
+        background: linear-gradient(135deg, var(--azul_2) 0%, var(--azul_1) 100%);
+        color: var(--blanco);
         border: none;
         border-radius: 12px;
         font-size: 1.1rem;
@@ -624,18 +638,18 @@
         justify-content: center;
         gap: 10px;
         margin-top: 1rem;
-        box-shadow: 0 5px 20px rgba(139, 69, 19, 0.3);
+        box-shadow: 0 5px 20px rgba(19, 45, 70, 0.3);
     }
 
     .register-btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
-        background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
+        box-shadow: 0 8px 25px rgba(19, 45, 70, 0.4);
+        background: linear-gradient(135deg, var(--azul_1) 0%, var(--azul_2) 100%);
     }
 
     /* Información adicional */
     .register-info {
-        background: #F5F5F5;
+        background: var(--azul_3);
         border-radius: 12px;
         padding: 1.5rem;
         margin-bottom: 2rem;
@@ -653,20 +667,20 @@
     }
 
     .info-item i {
-        color: #8B4513;
+        color: var(--azul_1);
         font-size: 1.2rem;
         margin-top: 2px;
         flex-shrink: 0;
     }
 
     .info-item h4 {
-        color: #5D4037;
+        color: var(--azul_2);
         margin: 0 0 4px 0;
         font-size: 0.95rem;
     }
 
     .info-item p {
-        color: #8D6E63;
+        color: var(--azul_1);
         margin: 0;
         font-size: 0.85rem;
         line-height: 1.4;
@@ -680,7 +694,7 @@
     }
 
     .nav-link {
-        color: #8B4513;
+        color: var(--azul_1);
         text-decoration: none;
         font-weight: 500;
         display: inline-flex;
@@ -692,19 +706,19 @@
     }
 
     .nav-link:hover {
-        color: #5D4037;
-        background: #F5F5F5;
+        color: var(--azul_2);
+        background: var(--azul_3);
         transform: translateY(-2px);
     }
 
     /* Panel de información */
     .info-panel {
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(241, 250, 238, 0.95);
         backdrop-filter: blur(10px);
         border-radius: 20px;
         padding: 2.5rem;
-        box-shadow: 0 20px 40px rgba(139, 69, 19, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 40px rgba(19, 45, 70, 0.15);
+        border: 1px solid rgba(168, 218, 220, 0.3);
         overflow-y: auto;
         max-height: 80vh;
     }
@@ -716,7 +730,7 @@
     .info-icon {
         width: 80px;
         height: 80px;
-        background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+        background: linear-gradient(135deg, var(--azul_2) 0%, var(--azul_1) 100%);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -730,13 +744,13 @@
     }
 
     .info-content h2 {
-        color: #5D4037;
+        color: var(--azul_2);
         margin-bottom: 0.5rem;
         font-size: 1.8rem;
     }
 
     .welcome-text {
-        color: #8D6E63;
+        color: var(--azul_1);
         margin-bottom: 2rem;
         font-size: 1.1rem;
     }
@@ -758,32 +772,32 @@
     }
 
     .feature:hover {
-        background: #e8f5e8;
+        background: var(--azul_3);
         transform: translateX(5px);
     }
 
     .feature i {
-        color: #8B4513;
+        color: var(--azul_1);
         font-size: 1.2rem;
         margin-top: 2px;
         flex-shrink: 0;
     }
 
     .feature h4 {
-        color: #5D4037;
+        color: var(--azul_2);
         margin: 0 0 4px 0;
         font-size: 0.95rem;
     }
 
     .feature p {
-        color: #8D6E63;
+        color: var(--azul_1);
         margin: 0;
         font-size: 0.85rem;
         line-height: 1.4;
     }
 
     .user-types h4 {
-        color: #5D4037;
+        color: var(--azul_2);
         margin-bottom: 1rem;
         text-align: center;
     }
@@ -798,13 +812,13 @@
     }
 
     .type-card.admin {
-        background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
-        border-left: 4px solid #FFA000;
+        background: linear-gradient(135deg, var(--amarillo_claro) 0%, #fff3a0 100%);
+        border-left: 4px solid var(--amarillo);
     }
 
     .type-card.guest {
-        background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
-        border-left: 4px solid #2196F3;
+        background: linear-gradient(135deg, var(--azul_3) 0%, #7ecfd1 100%);
+        border-left: 4px solid var(--azul_1);
     }
 
     .type-card i {
@@ -814,22 +828,22 @@
     }
 
     .type-card.admin i {
-        color: #FFA000;
+        color: var(--amarillo);
     }
 
     .type-card.guest i {
-        color: #2196F3;
+        color: var(--azul_1);
     }
 
     .type-card h5 {
         margin: 0 0 8px 0;
-        color: #5D4037;
+        color: var(--azul_2);
     }
 
     .type-card ul {
         margin: 0;
         padding-left: 15px;
-        color: #8D6E63;
+        color: var(--azul_1);
         font-size: 0.8rem;
     }
 

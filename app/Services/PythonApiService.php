@@ -435,4 +435,62 @@ public function getInsumo($id)
 }
 
 
+
+public function getClientes()
+{
+    try {
+        $response = Http::timeout($this->timeout)->get($this->baseUrl . '/clientes');
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al obtener clientes'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::getClientes: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function createCliente($data)
+{
+    try {
+        $response = Http::timeout($this->timeout)->post($this->baseUrl . '/clientes', $data);
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al crear cliente'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::createCliente: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function updateCliente($id, $data)
+{
+    try {
+        $response = Http::timeout($this->timeout)->put($this->baseUrl . "/clientes/{$id}", $data);
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al actualizar cliente'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::updateCliente: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function deleteCliente($id)
+{
+    try {
+        $response = Http::timeout($this->timeout)->delete($this->baseUrl . "/clientes/{$id}");
+        if ($response->successful()) {
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Error al eliminar cliente'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::deleteCliente: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+
 }

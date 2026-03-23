@@ -9,6 +9,7 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\InsumosController;
+use App\Http\Controllers\ClientesController;
 
 
 Route::get('/', function () {
@@ -30,6 +31,10 @@ Route::get('/password/show-link/{token}', [PasswordResetController::class, 'show
 // Rutas para invitados (tipo 1)
 Route::middleware(['auth:usuarios', 'check.user.type:1'])->group(function () {
     Route::get('/inicio', [LibrosController::class, 'inicioInv'])->name('inicio.invitado');
+
+
+
+
 });
 
 // Rutas compartidas de carrito (para ambos tipos de usuarios)
@@ -44,6 +49,12 @@ Route::middleware(['auth:usuarios'])->group(function () {
     Route::get('/pago-exito', [CarritoController::class, 'pagoExito'])->name('carrito.pago-exito');
     Route::get('/descargar-ticket', [CarritoController::class, 'descargarTicket'])->name('carrito.descargar-ticket');
     Route::get('/ventas/ticket/{id}', [CarritoController::class, 'ticket'])->name('ventas.ticket');
+    // Dentro del grupo middleware(['auth:usuarios', 'check.user.type:0'])
+Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
+Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
+Route::put('/clientes/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+Route::post('/clientes/destroy', [ClientesController::class, 'destroy'])->name('clientes.destroy');
+
 });
 
 // Rutas para empleados (tipo 0)
