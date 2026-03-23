@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\InsumosController;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -85,11 +87,18 @@ Route::middleware(['auth:usuarios', 'check.user.type:0'])->group(function () {
     
     // Rutas de ventas (solo empleados)
     Route::get('/ventas', [App\Http\Controllers\VentasController::class, 'index'])->name('ventas.index');
-    Route::get('/ventas/{id}', [App\Http\Controllers\VentasController::class, 'show'])->name('ventas.show');
-    Route::get('/ventas/mesas/disponibles', [App\Http\Controllers\VentasController::class, 'mesasDisponibles'])->name('ventas.mesas.disponibles');
     Route::get('/ventas/reportes', [App\Http\Controllers\VentasController::class, 'reportes'])->name('ventas.reportes');
+    Route::get('/ventas/mesas/disponibles', [App\Http\Controllers\VentasController::class, 'mesasDisponibles'])->name('ventas.mesas.disponibles');
+    Route::get('/ventas/{id}', [App\Http\Controllers\VentasController::class, 'show'])->name('ventas.show');
     
     // Rutas de registro (solo empleados)
     Route::get('/libros/registrarse', [RegistrarseController::class, 'registrarse'])->name('libros.registrarse');
     Route::post('/libros/registrarse', [RegistrarseController::class, 'registrar'])->name('libros.registrar');
+
+    // Rutas de insumos
+    Route::get('/insumos', [InsumosController::class, 'index'])->name('insumos.index');
+    Route::post('/insumos/store', [InsumosController::class, 'store'])->name('insumos.store');
+    Route::put('/insumos/{id}', [InsumosController::class, 'update'])->name('insumos.update');
+    Route::post('/insumos/destroy', [InsumosController::class, 'destroy'])->name('insumos.destroy');
+
 });

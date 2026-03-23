@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="carrito-container">
-    <!-- Elementos decorativos de café - TAZAS BLANCAS -->
+    <!-- Elementos decorativos - GOTAS DE AGUA -->
     <div class="coffee-elements">
         <div class="coffee-cup cup-1">
             <div class="cup-top white-cup"></div>
@@ -48,12 +48,12 @@
                             <i class="fas fa-shopping-cart"></i>
                         </div>
                         <div class="header-title">
-                            <h4><i class="fas fa-coffee"></i> Carrito de Compras</h4>
+                            <h4><i class="fas fa-shopping-cart"></i> Carrito de Compras</h4>
                             <p>Revisa tus productos antes de pagar</p>
                         </div>
                         <div class="coffee-decoration-header">
                             <span>🛒</span>
-                            <span>☕</span>
+                            <span>💧</span>
                             <span>💰</span>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                                 <h3>Tu carrito está vacío</h3>
                                 <p>Agrega algunos productos deliciosos para continuar</p>
                                 <a href="/inicio" class="btn-ver-productos">
-                                    <i class="fas fa-coffee"></i> Ver Productos
+                                    <i class="fas fa-tint"></i> Ver Productos
                                 </a>
                             </div>
 
@@ -95,12 +95,12 @@
                             <div class="productos-sugeridos mt-5">
                                 <div class="seccion-header">
                                     <div class="header-decoration">
-                                        <i class="fas fa-mug-hot"></i>
+                                        <i class="fas fa-tint"></i>
                                         <i class="fas fa-star"></i>
-                                        <i class="fas fa-mug-hot"></i>
+                                        <i class="fas fa-tint"></i>
                                     </div>
                                     <h3>Productos disponibles</h3>
-                                    <p>Comienza a llenar tu carrito con nuestras delicias</p>
+                                    <p>Comienza a llenar tu carrito con nuestros productos</p>
                                 </div>
 
                                 <div class="productos-grid">
@@ -117,7 +117,7 @@
                                                         <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}">
                                                     @else
                                                         <div class="sugerido-placeholder">
-                                                            <i class="fas fa-coffee"></i>
+                                                            <i class="fas fa-tint"></i>
                                                         </div>
                                                     @endif
                                                     @if($stock < 10)
@@ -171,7 +171,7 @@
                                                                  class="producto-img">
                                                         @else
                                                             <div class="producto-img-placeholder">
-                                                                <i class="fas fa-coffee"></i>
+                                                                <i class="fas fa-tint"></i>
                                                             </div>
                                                         @endif
                                                         <div class="producto-detalles">
@@ -268,9 +268,9 @@
                             <div class="productos-destacados mt-5">
                                 <div class="seccion-header">
                                     <div class="header-decoration">
-                                        <i class="fas fa-coffee"></i>
+                                        <i class="fas fa-tint"></i>
                                         <i class="fas fa-plus-circle"></i>
-                                        <i class="fas fa-coffee"></i>
+                                        <i class="fas fa-tint"></i>
                                     </div>
                                     <h3>¿Quieres agregar más productos?</h3>
                                     <p>Selecciona de nuestros productos destacados</p>
@@ -293,7 +293,7 @@
                                                         <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}">
                                                     @else
                                                         <div class="mini-placeholder">
-                                                            <i class="fas fa-coffee"></i>
+                                                            <i class="fas fa-tint"></i>
                                                         </div>
                                                     @endif
                                                 </div>

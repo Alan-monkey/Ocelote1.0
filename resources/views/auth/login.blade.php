@@ -5,36 +5,28 @@
     <div class="coffee-elements">
         <!-- Tazas blancas múltiples -->
         <div class="coffee-cup cup-1">
-            <div class="cup-top white-cup"></div>
-            <div class="cup-body white-cup"></div>
-            <div class="cup-handle white-handle"></div>
+            <i class="fas fa-bottle-water"></i>
             <div class="steam s1"></div>
             <div class="steam s2"></div>
             <div class="steam s3"></div>
         </div>
         
         <div class="coffee-cup cup-2">
-            <div class="cup-top white-cup"></div>
-            <div class="cup-body white-cup"></div>
-            <div class="cup-handle white-handle"></div>
+            <i class="fas fa-bottle-water"></i>
             <div class="steam s1"></div>
             <div class="steam s2"></div>
             <div class="steam s3"></div>
         </div>
         
         <div class="coffee-cup cup-3">
-            <div class="cup-top white-cup"></div>
-            <div class="cup-body white-cup"></div>
-            <div class="cup-handle white-handle"></div>
+            <i class="fas fa-bottle-water"></i>
             <div class="steam s1"></div>
             <div class="steam s2"></div>
             <div class="steam s3"></div>
         </div>
         
         <div class="coffee-cup cup-4">
-            <div class="cup-top white-cup"></div>
-            <div class="cup-body white-cup"></div>
-            <div class="cup-handle white-handle"></div>
+            <i class="fas fa-bottle-water"></i>
             <div class="steam s1"></div>
             <div class="steam s2"></div>
             <div class="steam s3"></div>
@@ -58,20 +50,20 @@
 
     <div class="login-wrapper">
         <div class="login-card glass-effect">
-            <!-- Header con logo de cafetería -->
+            <!-- Header con logo de purificadora -->
             <div class="login-header">
                 <div class="logo">
                     <div class="logo-container">
-                        <i class="fas fa-coffee"></i>
+                        <i class="fas fa-tint"></i>
                         <i class="fas fa-heart heart-icon"></i>
                     </div>
-                    <h1>Café <span class="highlight">Sofft</span></h1>
+                    <h1>Aqua<span class="highlight">Pura</span></h1>
                 </div>
                 <p class="welcome-text">Bienvenido de nuevo</p>
                 <div class="coffee-beans-decoration">
-                    <span>☕</span>
-                    <span>☕</span>
-                    <span>☕</span>
+                    <span>💧</span>
+                    <span>💧</span>
+                    <span>💧</span>
                 </div>
             </div>
 
@@ -142,9 +134,23 @@
 </div>
 
 <style>
+    :root {
+        --azul_1: #457b9d;
+        --azul_2: #132d46;
+        --azul_3: #a8dadc;
+        --azul_fuerte: #132d46;
+        --blanco: #f1faee;
+        --negrito: #151613;
+        --negrito_verde: #191e29;
+        --verde_azul: #07cdaf;
+        --amarillo_claro: #fffaca;
+        --amarillo: #e0d205;
+        --verde_obs: #004f39;
+    }
+
     .login-container {
         min-height: 100vh;
-        background: linear-gradient(145deg, #1a0f0a 0%, #2d1e15 50%, #3b2a20 100%);
+        background: linear-gradient(145deg, var(--negrito_verde) 0%, var(--azul_2) 50%, var(--azul_fuerte) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -167,8 +173,10 @@
     /* TAZAS BLANCAS - Múltiples y animadas */
     .coffee-cup {
         position: absolute;
-        animation: float-cup 8s ease-in-out infinite;
+        animation: float-cup 4s ease-in-out infinite;
         filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        font-size: 6rem;
+        color: rgba(168, 218, 220, 0.74);
     }
 
     .cup-1 {
@@ -213,17 +221,15 @@
     .cup-top {
         width: 80px;
         height: 20px;
-        background: #6F4E37;
+        background: linear-gradient(145deg, #ffffff, #e0e0e0);
         border-radius: 50%;
         position: relative;
         z-index: 2;
-        background: linear-gradient(145deg, #ffffff, #e0e0e0);
     }
 
     .cup-body {
         width: 70px;
         height: 60px;
-        background: linear-gradient(135deg, #6F4E37 0%, #8B5A2B 100%);
         border-radius: 0 0 35px 35px;
         position: relative;
         top: -10px;
@@ -233,13 +239,12 @@
     .cup-handle {
         width: 25px;
         height: 40px;
-        border: 8px solid #6F4E37;
+        border: 8px solid #f0f0f0;
         border-left: none;
         border-radius: 0 20px 20px 0;
         position: absolute;
         right: -20px;
         top: 15px;
-        border-color: #f0f0f0;
     }
 
     .steam {
@@ -298,7 +303,7 @@
         position: absolute;
         width: 20px;
         height: 10px;
-        background: #8B4513;
+        background: var(--azul_3);
         border-radius: 50%;
         opacity: 0.4;
         animation: float-bean 15s infinite linear;
@@ -451,7 +456,7 @@
 
     .logo i {
         font-size: 3.5rem;
-        color: #8B4513;
+        color: var(--verde_azul);
         animation: rotate-slow 10s infinite linear;
     }
 
@@ -477,12 +482,12 @@
     .logo h1 {
         font-size: 2.5rem;
         font-weight: 700;
-        color: #3E2723;
+        color: var(--azul_2);
         margin: 10px 0 5px;
     }
 
     .highlight {
-        color: #8B4513;
+        color: var(--azul_1);
         position: relative;
         display: inline-block;
     }
@@ -494,7 +499,7 @@
         left: 0;
         width: 100%;
         height: 2px;
-        background: linear-gradient(90deg, transparent, #8B4513, transparent);
+        background: linear-gradient(90deg, transparent, var(--azul_1), transparent);
         animation: underline-pulse 2s infinite;
     }
 
@@ -504,7 +509,7 @@
     }
 
     .welcome-text {
-        color: #6D4C41;
+        color: var(--azul_1);
         font-size: 1.1rem;
         margin: 10px 0 5px;
         opacity: 0.8;
@@ -550,7 +555,7 @@
     .input-icon {
         position: absolute;
         left: 18px;
-        color: #8B4513;
+        color: var(--azul_1);
         font-size: 1.2rem;
         z-index: 2;
         transition: all 0.3s ease;
@@ -559,19 +564,19 @@
     .form-input {
         width: 100%;
         padding: 18px 18px 18px 50px;
-        border: 2px solid #E8D5C0;
+        border: 2px solid var(--azul_3);
         border-radius: 15px;
         font-size: 1rem;
         background: white;
         transition: all 0.3s ease;
-        color: #3E2723;
+        color: var(--azul_2);
         position: relative;
         z-index: 1;
     }
 
     .form-input:focus {
         outline: none;
-        border-color: #8B4513;
+        border-color: var(--azul_1);
         transform: translateY(-2px);
     }
 
@@ -581,7 +586,7 @@
         left: 50%;
         width: 0;
         height: 2px;
-        background: linear-gradient(90deg, #8B4513, #C97C5D);
+        background: linear-gradient(90deg, var(--azul_1), var(--verde_azul));
         transition: all 0.3s ease;
         transform: translateX(-50%);
         border-radius: 2px;
@@ -592,7 +597,8 @@
     }
 
     .form-input::placeholder {
-        color: #B2967D;
+        color: var(--azul_1);
+        opacity: 0.6;
         transition: all 0.3s ease;
     }
 
@@ -615,7 +621,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        color: #5D4037;
+        color: var(--azul_2);
         cursor: pointer;
         position: relative;
         padding-left: 28px;
@@ -635,18 +641,18 @@
         height: 18px;
         width: 18px;
         background-color: white;
-        border: 2px solid #E8D5C0;
+        border: 2px solid var(--azul_3);
         border-radius: 4px;
         transition: all 0.3s ease;
     }
 
     .remember-checkbox:hover input ~ .checkmark {
-        border-color: #8B4513;
+        border-color: var(--azul_1);
     }
 
     .remember-checkbox input:checked ~ .checkmark {
-        background-color: #8B4513;
-        border-color: #8B4513;
+        background-color: var(--azul_1);
+        border-color: var(--azul_1);
     }
 
     .checkmark:after {
@@ -670,7 +676,7 @@
     }
 
     .forgot-link {
-        color: #8B4513;
+        color: var(--azul_1);
         text-decoration: none;
         font-size: 0.9rem;
         transition: all 0.3s ease;
@@ -680,7 +686,7 @@
     }
 
     .forgot-link:hover {
-        color: #5D4037;
+        color: var(--azul_2);
         transform: translateX(5px);
     }
 
@@ -688,7 +694,7 @@
     .login-btn {
         width: 100%;
         padding: 18px;
-        background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+        background: linear-gradient(135deg, var(--azul_2) 0%, var(--azul_1) 100%);
         color: white;
         border: none;
         border-radius: 15px;
@@ -706,8 +712,8 @@
 
     .login-btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 15px 35px rgba(139, 69, 19, 0.4);
-        background: linear-gradient(135deg, #9C4F1E 0%, #B45F2E 100%);
+        box-shadow: 0 15px 35px rgba(19, 45, 70, 0.4);
+        background: linear-gradient(135deg, var(--azul_1) 0%, var(--verde_azul) 100%);
     }
 
     .login-btn:active {
@@ -802,21 +808,21 @@
     .login-footer {
         text-align: center;
         padding-top: 25px;
-        border-top: 2px solid #E8D5C0;
+        border-top: 2px solid var(--azul_3);
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
 
     .login-footer p {
-        color: #6D4C41;
+        color: var(--azul_1);
         margin: 0;
         font-size: 0.95rem;
     }
 
     .footer-link {
         color: white;
-        background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+        background: linear-gradient(135deg, var(--azul_2) 0%, var(--azul_1) 100%);
         text-decoration: none;
         font-weight: 600;
         padding: 12px 25px;
@@ -831,7 +837,7 @@
 
     .footer-link:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
+        box-shadow: 0 10px 25px rgba(19, 45, 70, 0.3);
         color: white;
     }
 

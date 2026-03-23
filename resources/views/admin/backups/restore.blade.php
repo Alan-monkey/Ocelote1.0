@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="backup-restore-container">
-    <!-- Elementos decorativos de café -->
+    <!-- Elementos decorativos - GOTAS DE AGUA -->
     <div class="coffee-elements">
         <div class="coffee-cup cup-1">
             <div class="cup-top white-cup"></div>
@@ -42,9 +42,9 @@
                             <p>Selecciona el backup que deseas restaurar</p>
                         </div>
                         <div class="coffee-decoration">
-                            <span>☕</span>
+                            <span>💧</span>
                             <span>💾</span>
-                            <span>☕</span>
+                            <span>💧</span>
                         </div>
                     </div>
 

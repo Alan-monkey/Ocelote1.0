@@ -58,9 +58,9 @@
                         <div class="icon-wrapper">
                             <i class="fas fa-key main-icon"></i>
                             <div class="coffee-decoration">
-                                <span>☕</span>
+                                <span>💧</span>
                                 <span>🔐</span>
-                                <span>☕</span>
+                                <span>💧</span>
                             </div>
                         </div>
                         <h1 class="recovery-title">Recuperar Contraseña</h1>
@@ -177,7 +177,7 @@
 
                     <!-- Footer decorativo -->
                     <div class="recovery-footer">
-                        <span>☕</span> Café Sofft - Siempre contigo <span>☕</span>
+                        <span>💧</span> AquaPura - Siempre contigo <span>💧</span>
                     </div>
                 </div>
             </div>

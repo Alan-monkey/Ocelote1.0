@@ -192,7 +192,7 @@
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-coffee"></i>
+                    <i class="fas fa-tint"></i>
                     <div>
                         <h4>Acceso Inmediato</h4>
                         <p>Podrás acceder al sistema inmediatamente después del registro</p>
@@ -217,10 +217,10 @@
         <div class="info-panel">
             <div class="info-content">
                 <div class="info-icon">
-                    <i class="fas fa-coffee"></i>
+                    <i class="fas fa-tint"></i>
                 </div>
-                <h2>Café Sofft</h2>
-                <p class="welcome-text">Sistema de Gestión de Cafetería</p>
+                <h2>AquaPura</h2>
+                <p class="welcome-text">Sistema de Gestión de Purificadora de Agua</p>
                 
                 <div class="features-list">
                     <div class="feature">
@@ -241,7 +241,7 @@
                         <i class="fas fa-mobile-alt"></i>
                         <div>
                             <h4>Acceso Móvil</h4>
-                            <p>Gestiona tu cafetería desde cualquier dispositivo</p>
+                            <p>Gestiona tu purificadora de agua desde cualquier dispositivo</p>
                         </div>
                     </div>
                 </div>

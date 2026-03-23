@@ -44,9 +44,9 @@
                             <p class="backup-name-badge">{{ $metadata['backup_name'] }}</p>
                         </div>
                         <div class="coffee-decoration">
-                            <span>☕</span>
+                            <span>💧</span>
                             <span>📋</span>
-                            <span>☕</span>
+                            <span>💧</span>
                         </div>
                     </div>
 

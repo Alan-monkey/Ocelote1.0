@@ -55,9 +55,9 @@
                             <p>Protege tus datos con un respaldo seguro</p>
                         </div>
                         <div class="coffee-decoration">
-                            <span>☕</span>
+                            <span>💧</span>
                             <span>💾</span>
-                            <span>☕</span>
+                            <span>💧</span>
                         </div>
                     </div>
 

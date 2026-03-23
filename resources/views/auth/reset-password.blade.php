@@ -58,9 +58,9 @@
                         <div class="logo-wrapper">
                             <i class="fas fa-key logo-icon"></i>
                             <div class="coffee-decoration">
-                                <span>☕</span>
-                                <span>☕</span>
-                                <span>☕</span>
+                                <span>💧</span>
+                                <span>💧</span>
+                                <span>💧</span>
                             </div>
                         </div>
                         <h2 class="reset-title">Restablecer Contraseña</h2>

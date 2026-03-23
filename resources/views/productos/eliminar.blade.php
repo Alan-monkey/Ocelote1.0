@@ -48,12 +48,12 @@
                             <i class="fas fa-trash-alt"></i>
                         </div>
                         <div class="header-title">
-                            <h4><i class="fas fa-coffee"></i> Eliminar productos</h4>
+                            <h4><i class="fas fa-tint"></i> Eliminar productos</h4>
                             <p>Selecciona los productos que deseas eliminar</p>
                         </div>
                         <div class="coffee-decoration-header">
                             <span>⚠️</span>
-                            <span>☕</span>
+                            <span>💧</span>
                             <span>⚠️</span>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                                                          alt="{{ $producto->nombre }}">
                                                 @else
                                                     <div class="imagen-placeholder">
-                                                        <i class="fas fa-coffee"></i>
+                                                        <i class="fas fa-tint"></i>
                                                     </div>
                                                 @endif
                                             </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Café Sofft - Sistema de Gestión</title>
+    <title>AquaPura - Sistema de Gestión</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -27,7 +27,7 @@
             min-height: 100vh;
         }
 
-        /* Navegación estilo cafetería */
+        /* Navegación estilo purificadora */
         .navbar {
             background: linear-gradient(135deg, var(--cafe-oscuro) 0%, var(--cafe-medio) 100%);
             box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
@@ -388,7 +388,7 @@
             transform: translateX(5px);
         }
 
-        /* Elementos decorativos de café */
+        /* Elementos decorativos de agua */
         .coffee-elements {
             position: fixed;
             top: 0;
@@ -507,7 +507,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-coffee"></i> Café Sofft
+                <i class="fas fa-tint"></i> AquaPura
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -574,18 +574,18 @@
         <section class="inicio">
             <div class="content">
                 <div class="text">
-                    <h1>Bienvenido a Café Sofft</h1>
-                    <p>Disfruta de la mejor experiencia en gestión de cafetería con nuestro sistema integral. Desde el control de inventario hasta la gestión de pedidos, tenemos todo lo que necesitas para hacer crecer tu negocio.</p>
+                    <h1>Bienvenido a AquaPura</h1>
+                    <p>Disfruta de la mejor experiencia en gestión de purificadora de agua con nuestro sistema integral. Desde el control de inventario hasta la gestión de pedidos, tenemos todo lo que necesitas para hacer crecer tu negocio.</p>
                     <button>Descubre Más</button>
                 </div>
-                <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Café Sofft">
+                <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="AquaPura">
             </div>
         </section>
 
         <!-- Sección de servicios -->
         <section class="services">
             <h2>Nuestros Servicios</h2>
-            <p>Ofrecemos una amplia gama de servicios para gestionar eficientemente tu cafetería y brindar la mejor experiencia a tus clientes.</p>
+            <p>Ofrecemos una amplia gama de servicios para gestionar eficientemente tu purificadora de agua y brindar la mejor experiencia a tus clientes.</p>
             <div class="grid">
                 <div class="gallery-item">
                     <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Gestión de Inventario">
@@ -623,7 +623,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2023 Café Sofft - Sistema de Gestión. Todos los derechos reservados.</p>
+            <p>&copy; 2023 AquaPura - Sistema de Gestión. Todos los derechos reservados.</p>
         </div>
     </footer>
 

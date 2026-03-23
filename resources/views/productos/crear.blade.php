@@ -48,13 +48,13 @@
                             <i class="fas fa-plus-circle"></i>
                         </div>
                         <div class="header-title">
-                            <h4><i class="fas fa-coffee"></i> Añadir producto</h4>
-                            <p>Nueva delicia para tu cafetería</p>
+                            <h4><i class="fas fa-tint"></i> Añadir producto</h4>
+                            <p>Nuevo producto para tu purificadora</p>
                         </div>
                         <div class="coffee-decoration-header">
-                            <span>☕</span>
+                            <span>💧</span>
                             <span>✨</span>
-                            <span>☕</span>
+                            <span>💧</span>
                         </div>
                     </div>
 

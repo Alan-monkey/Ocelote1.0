@@ -40,7 +40,7 @@
             overflow: hidden;
         }
 
-        /* Decoración superior tipo café */
+        /* Decoración superior tipo purificadora */
         .ticket-header {
             text-align: center;
             margin-bottom: 16px;
@@ -319,14 +319,14 @@
 </head>
 <body>
     <div class="ticket-card">
-        <!-- HEADER CAFETERO -->
+        <!-- HEADER PURIFICADORA -->
         <div class="ticket-header">
             <div class="brand-icon">
-                <i class="fas fa-mug-hot" style="color: #8B4513;"></i>
-                <i class="fas fa-seedling" style="color: #D4AF37; font-size: 20px; margin-left: -8px;"></i>
+                <i class="fas fa-tint" style="color: #1565C0;"></i>
+                <i class="fas fa-water" style="color: #1976D2; font-size: 20px; margin-left: -8px;"></i>
             </div>
-            <h1 class="brand-name">COFFESOFT</h1>
-            <div class="brand-slogan">SPECIALTY COFFEE · SINCE 2024</div>
+            <h1 class="brand-name">AQUAPURA</h1>
+            <div class="brand-slogan">AGUA PURIFICADA · DESDE 2024</div>
             
             <div class="store-details">
                 <span><i class="fas fa-map-pin"></i> Av. Principal #123, San Ángel, CDMX</span>
@@ -402,16 +402,16 @@
             <span style="font-weight: 800; color: #8B4513;">${{ number_format($cambio, 2) }}</span>
         </div>
 
-        <!-- DIVISOR CON CAFÉ -->
+        <!-- DIVISOR CON AGUA -->
         <div class="divider">
             <span class="divider-line"></span>
-            <span class="divider-icon"><i class="fas fa-coffee"></i></span>
+            <span class="divider-icon"><i class="fas fa-tint"></i></span>
             <span class="divider-line"></span>
         </div>
 
-        <!-- AGRADECIMIENTO CAFETERO -->
+        <!-- AGRADECIMIENTO -->
         <div class="thank-you-message">
-            <span>☕ ¡GRACIAS POR SU COMPRA! ☕</span>
+            <span>💧 ¡GRACIAS POR SU COMPRA! 💧</span>
         </div>
 
         <!-- FOOTER CON CÓDIGO DE BARRAS -->
@@ -422,13 +422,13 @@
         <div class="ticket-footer">
             <div class="footer-icons">
                 <i class="fas fa-truck"></i>
-                <i class="fas fa-mug-saucer"></i>
+                <i class="fas fa-tint"></i>
                 <i class="fas fa-heart"></i>
             </div>
             <p>** Ticket válido como comprobante fiscal **</p>
             <p>Conserve este ticket para cualquier aclaración</p>
             <p>--------------------------------</p>
-            <p style="font-weight: 600;">Powered by Laravel POS · Café Sofft</p>
+            <p style="font-weight: 600;">Powered by Laravel POS · AquaPura</p>
             <p style="font-size: 8px; margin-top: 5px;">#{{ $pedido['numero_pedido'] }} | {{ date('H:i:s') }}</p>
         </div>
     </div>

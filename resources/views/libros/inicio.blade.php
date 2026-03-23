@@ -16,17 +16,17 @@
                     <h1 class="hero-title">{{ $user->nombre }}</h1>
                     <div class="hero-role-badge">
                         <i class="fas fa-id-card me-2"></i>
-                        {{ $user->user_tipo == '0' ? 'Empleado del Sistema' : 'Miembro Premium' }}
+                        {{ $user->user_tipo == '0' ? 'Administrador del Sistema' : 'Miembro Premium' }}
                     </div>
                     @else
                     <div class="welcome-chip">
                         <i class="fas fa-seedling me-2"></i> Invitado
                     </div>
-                    <h1 class="hero-title">Bienvenido a CoffeSoft</h1>
+                    <h1 class="hero-title">Bienvenido a AquaPura</h1>
                     @endif
                     <p class="hero-description">
-                        La plataforma definitiva para transformar la gestión de tu cafetería.
-                        Control total, análisis en tiempo real y una experiencia diseñada para amantes del café.
+                        La plataforma definitiva para transformar la gestión de tu purificadora de agua.
+                        Control total, análisis en tiempo real y una experiencia diseñada para tu negocio.
                     </p>
                     <div class="hero-cta-group">
                         <button class="cta-primary">
@@ -41,19 +41,19 @@
                     <div class="coffee-showcase">
                         <div class="floating-card card-1">
                             <i class="fas fa-chart-line"></i>
-                            <span>+45% ventas</span>
+                            <span>${{ number_format($totalHoy, 0) }}</span> <!-- Total ventas hoy -->
                         </div>
                         <div class="floating-card card-2">
-                            <i class="fas fa-users"></i>
-                            <span>128 clientes</span>
+                            <i class="fas fa-receipt"></i>
+                            <span>{{ $numVentasHoy }} tickets</span> <!-- Número de ventas -->
                         </div>
                         <div class="floating-card card-3">
-                            <i class="fas fa-clock"></i>
-                            <span>tiempo real</span>
+                            <i class="fas fa-crown"></i>
+                            <span>{{ $masVendidos ? array_key_first($masVendidos) : 'Sin ventas' }}</span> <!-- Producto top -->
                         </div>
                         <div class="main-cup">
                             <div class="steam-animation"></div>
-                            <i class="fas fa-mug-hot"></i>
+                            <i class="fas fa-tint"></i>
                         </div>
                         <div class="beans-spread">
                             <span></span><span></span><span></span><span></span><span></span>
@@ -69,37 +69,37 @@
         </div>
     </div>
 
-    <!-- Sección Métricas / Stats -->
+    <!-- Sección Métricas / Stats con datos reales -->
     <div class="metrics-section">
         <div class="container">
             <div class="metrics-grid">
                 <div class="metric-item">
-                    <div class="metric-value">150+</div>
-                    <div class="metric-label">Cafeterías activas</div>
+                    <div class="metric-value">${{ number_format($totalHoy, 0) }}</div>
+                    <div class="metric-label">Ventas hoy</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-value">12k</div>
-                    <div class="metric-label">Pedidos gestionados</div>
+                    <div class="metric-value">{{ $numVentasHoy }}</div>
+                    <div class="metric-label">Tickets hoy</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-value">99.9%</div>
-                    <div class="metric-label">Uptime garantizado</div>
+                    <div class="metric-value">${{ number_format($promedioHoy, 0) }}</div>
+                    <div class="metric-label">Ticket promedio</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-value">24/7</div>
-                    <div class="metric-label">Soporte técnico</div>
+                    <div class="metric-value">{{ $masVendidos ? array_key_first($masVendidos) : '—' }}</div>
+                    <div class="metric-label">Producto top</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Core Features - Premium Cards -->
+    <!-- Core Features - Premium Cards (se mantienen igual) -->
     <div class="features-premium">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Todo lo que necesitas</span>
-                <h2 class="section-title-modern">Gestiona tu cafetería <span class="text-gradient">como un experto</span></h2>
-                <p class="section-subtitle-modern">Herramientas profesionales para el negocio del café</p>
+                <h2 class="section-title-modern">Gestiona tu purificadora <span class="text-gradient">como un experto</span></h2>
+                <p class="section-subtitle-modern">Herramientas profesionales para el negocio del agua</p>
             </div>
             <div class="features-grid-premium">
                 <div class="feature-card-premium">
@@ -136,7 +136,7 @@
         </div>
     </div>
 
-    <!-- Showcase Visual - Galería Profesional -->
+    <!-- Showcase Visual - Galería Profesional (se mantiene igual) -->
     <div class="showcase-moderno">
         <div class="container">
             <div class="row align-items-center">
@@ -166,25 +166,56 @@
                                 <span>Analytics</span>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- CTA Final con modal incluido -->
-    <div class="cta-final">
+    <!-- NUEVA SECCIÓN: Gráfico de productos más vendidos -->
+    <div class="features-premium" style="padding-top: 0;">
         <div class="container">
-            <div class="cta-card">
-                <h2>¿Listo para transformar tu cafetería?</h2>
-                <p>Únete a cientos de dueños que ya confían en CoffeSoft</p>
-                
+            <div class="section-header">
+                <span class="section-tag">Lo más vendido hoy</span>
+                <h2 class="section-title-modern">Top <span class="text-gradient">5 productos</span></h2>
+                <p class="section-subtitle-modern">Los favoritos de tus clientes este día</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="feature-card-premium" style="padding: 2rem;">
+                        @if(count($masVendidos) > 0)
+                            <div style="position: relative; height: 300px; width: 100%;">
+                                <canvas id="graficaProductos"></canvas>
+                            </div>
+                            <div class="mt-4">
+                                @foreach($masVendidos as $nombre => $cantidad)
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span><i class="fas fa-tint me-2" style="color: #1565C0;"></i>{{ $nombre }}</span>
+                                        <span class="badge" style="background: var(--verde_azul); color: var(--negrito);">{{ $cantidad }} vendidos</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-center text-muted my-5">No hay ventas registradas hoy.</p>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Mejorado -->
+    <!-- CTA Final (se mantiene igual) -->
+    <div class="cta-final">
+        <div class="container">
+            <div class="cta-card">
+                <h2>¿Listo para transformar tu purificadora?</h2>
+                <p>Únete a cientos de dueños que ya confían en AquaPura</p>
+                <!-- Eliminado el botón que no hacía nada -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Mejorado (se mantiene igual) -->
     <div class="modal fade premium-modal" id="backupModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -215,10 +246,69 @@
     </div>
 </div>
 
+<!-- Script para el gráfico -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if(count($masVendidos) > 0)
+        const ctx = document.getElementById('graficaProductos').getContext('2d');
+        const nombres = {!! json_encode(array_keys($masVendidos)) !!};
+        const cantidades = {!! json_encode(array_values($masVendidos)) !!};
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: nombres,
+                datasets: [{
+                    data: cantidades,
+                    backgroundColor: [
+                        '#457b9d',
+                        '#07cdaf',
+                        '#a8dadc',
+                        '#132d46',
+                        '#004f39'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: { size: 12 }
+                        }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+        @endif
+    });
+</script>
+
 <style>
+    :root {
+        --azul_1: #457b9d;
+        --azul_2: #132d46;
+        --azul_3: #a8dadc;
+        --azul_fuerte: #132d46;
+        --blanco: #f1faee;
+        --negrito: #151613;
+        --negrito_verde: #191e29;
+        --verde_azul: #07cdaf;
+        --amarillo_claro: #fffaca;
+        --amarillo: #e0d205;
+        --verde_obs: #004f39;
+    }
+
     /* ===== ESTILOS PREMIUM ===== */
     .coffee-master {
-        background: #faf7f2;
+        background: var(--blanco);
         overflow-x: hidden;
         font-family: 'Inter', 'Segoe UI', sans-serif;
     }
@@ -226,7 +316,7 @@
     /* Hero Épico */
     .hero-epic {
         position: relative;
-        background: linear-gradient(145deg, #4a2c1a 0%, #6b3f1f 100%);
+        background: linear-gradient(145deg, var(--negrito_verde) 0%, var(--azul_2) 100%);
         min-height: 100vh;
         color: white;
         overflow: hidden;
@@ -238,8 +328,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: radial-gradient(circle at 30% 40%, rgba(210, 175, 55, 0.15) 0%, transparent 30%),
-            radial-gradient(circle at 70% 60%, rgba(210, 175, 55, 0.1) 0%, transparent 35%);
+        background-image: radial-gradient(circle at 30% 40%, rgba(7, 205, 175, 0.15) 0%, transparent 30%),
+            radial-gradient(circle at 70% 60%, rgba(7, 205, 175, 0.1) 0%, transparent 35%);
         pointer-events: none;
     }
 
@@ -251,7 +341,7 @@
         padding: 0.5rem 1.5rem;
         border-radius: 40px;
         font-size: 0.95rem;
-        border: 1px solid rgba(255, 215, 0, 0.3);
+        border: 1px solid rgba(7, 205, 175, 0.3);
         margin-bottom: 1.5rem;
         position: relative;
     }
@@ -260,7 +350,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at center, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+        background: radial-gradient(circle at center, rgba(7, 205, 175, 0.3) 0%, transparent 70%);
         filter: blur(10px);
         top: 0;
         left: 0;
@@ -270,7 +360,7 @@
         font-size: clamp(3rem, 8vw, 5rem);
         font-weight: 800;
         line-height: 1.1;
-        background: linear-gradient(to right, #fff, #f5e6b3);
+        background: linear-gradient(to right, #fff, var(--azul_3));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 1rem;
@@ -278,12 +368,12 @@
     }
 
     .hero-role-badge {
-        background: rgba(210, 175, 55, 0.2);
+        background: rgba(7, 205, 175, 0.2);
         backdrop-filter: blur(8px);
         padding: 0.75rem 2rem;
         border-radius: 60px;
         display: inline-block;
-        border: 1px solid rgba(255, 215, 0, 0.4);
+        border: 1px solid rgba(7, 205, 175, 0.4);
         margin-bottom: 2rem;
     }
 
@@ -302,20 +392,20 @@
     }
 
     .cta-primary {
-        background: #D4AF37;
-        color: #2c1a0b;
+        background: var(--verde_azul);
+        color: var(--negrito);
         border: none;
         padding: 1rem 2.5rem;
         border-radius: 50px;
         font-weight: 700;
         font-size: 1.1rem;
         transition: all 0.3s ease;
-        box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.4);
+        box-shadow: 0 10px 25px -5px rgba(7, 205, 175, 0.4);
     }
 
     .cta-primary:hover {
         transform: translateY(-3px);
-        box-shadow: 0 20px 30px -5px rgba(212, 175, 55, 0.6);
+        box-shadow: 0 20px 30px -5px rgba(7, 205, 175, 0.6);
     }
 
     .cta-secondary {
@@ -329,7 +419,7 @@
     }
 
     .cta-secondary:hover {
-        border-color: #D4AF37;
+        border-color: var(--verde_azul);
         background: rgba(255, 255, 255, 0.05);
     }
 
@@ -345,13 +435,13 @@
     .main-cup {
         width: 150px;
         height: 150px;
-        background: linear-gradient(145deg, #d7b686, #b38b5a);
+        background: linear-gradient(145deg, var(--azul_3), var(--azul_1));
         border-radius: 50% 50% 40% 40%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 4rem;
-        color: #4a2c1a;
+        color: var(--azul_2);
         box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4), inset 0 -5px 10px rgba(0, 0, 0, 0.2);
         position: relative;
         animation: float-main 6s ease-in-out infinite;
@@ -380,8 +470,8 @@
         align-items: center;
         gap: 10px;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(212, 175, 55, 0.3);
-        color: #4a2c1a;
+        border: 1px solid rgba(7, 205, 175, 0.3);
+        color: var(--azul_2);
         font-weight: 600;
         animation: float 5s ease-in-out infinite;
     }
@@ -408,7 +498,7 @@
         position: absolute;
         width: 30px;
         height: 15px;
-        background: #3e2a1b;
+        background: var(--azul_3);
         border-radius: 50%;
         opacity: 0.2;
         filter: blur(3px);
@@ -448,12 +538,12 @@
     .metric-value {
         font-size: 2.8rem;
         font-weight: 800;
-        color: #8B4513;
+        color: var(--azul_1);
         line-height: 1.2;
     }
 
     .metric-label {
-        color: #6b4f3a;
+        color: var(--azul_2);
         font-weight: 500;
         letter-spacing: 0.5px;
     }
@@ -461,7 +551,7 @@
     /* Features Premium */
     .features-premium {
         padding: 5rem 0;
-        background: #faf7f2;
+        background: var(--blanco);
     }
 
     .section-header {
@@ -470,8 +560,8 @@
     }
 
     .section-tag {
-        background: rgba(139, 69, 19, 0.1);
-        color: #8B4513;
+        background: rgba(69, 123, 157, 0.1);
+        color: var(--azul_1);
         padding: 0.3rem 1.2rem;
         border-radius: 30px;
         font-weight: 600;
@@ -482,11 +572,11 @@
     .section-title-modern {
         font-size: 2.8rem;
         font-weight: 700;
-        color: #3e2e24;
+        color: var(--azul_2);
     }
 
     .text-gradient {
-        background: linear-gradient(135deg, #8B4513, #D4AF37);
+        background: linear-gradient(135deg, var(--azul_1), var(--verde_azul));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -503,19 +593,19 @@
         background: white;
         padding: 2.5rem 2rem;
         border-radius: 40px;
-        box-shadow: 0 20px 40px -10px rgba(93, 64, 55, 0.2);
+        box-shadow: 0 20px 40px -10px rgba(19, 45, 70, 0.15);
         transition: 0.3s ease;
-        border: 1px solid rgba(0, 0, 0, 0.02);
+        border: 1px solid rgba(168, 218, 220, 0.3);
     }
 
     .feature-card-premium:hover {
         transform: translateY(-10px);
-        box-shadow: 0 30px 50px -10px #8B4513;
+        box-shadow: 0 30px 50px -10px rgba(19, 45, 70, 0.3);
     }
 
     .card-icon {
         font-size: 3rem;
-        color: #D4AF37;
+        color: var(--verde_azul);
         margin-bottom: 1.5rem;
     }
 
@@ -523,7 +613,7 @@
         margin-top: 1.5rem;
         padding-top: 1rem;
         border-top: 1px solid #eee;
-        color: #8B4513;
+        color: var(--azul_1);
         font-weight: 600;
     }
 
@@ -570,33 +660,33 @@
     /* CTA Final */
     .cta-final {
         padding: 4rem 0;
-        background: #faf7f2;
+        background: var(--blanco);
     }
 
     .cta-card {
-        background: linear-gradient(135deg, #8B4513, #a85e2c);
+        background: linear-gradient(135deg, var(--azul_2), var(--azul_1));
         color: white;
         padding: 4rem 2rem;
         border-radius: 80px;
         text-align: center;
-        box-shadow: 0 30px 50px -10px #8B4513;
+        box-shadow: 0 30px 50px -10px rgba(19, 45, 70, 0.4);
     }
 
     .cta-glow {
-        background: #D4AF37;
+        background: var(--verde_azul);
         border: none;
         padding: 1.2rem 3rem;
         border-radius: 60px;
         font-weight: 700;
         font-size: 1.2rem;
-        color: #2c1a0b;
+        color: var(--negrito);
         transition: 0.3s;
-        box-shadow: 0 0 25px #D4AF37;
+        box-shadow: 0 0 25px rgba(7, 205, 175, 0.5);
     }
 
     .cta-glow:hover {
         transform: scale(1.05);
-        box-shadow: 0 0 35px #D4AF37;
+        box-shadow: 0 0 35px rgba(7, 205, 175, 0.7);
     }
 
     /* Modal Premium */
@@ -608,7 +698,7 @@
 
     .modal-icon {
         font-size: 4rem;
-        color: #D4AF37;
+        color: var(--verde_azul);
         margin: 1rem 0;
     }
 
@@ -620,14 +710,15 @@
     }
 
     .modal-features span {
-        background: #f0e8de;
+        background: rgba(168, 218, 220, 0.2);
         padding: 0.3rem 1rem;
         border-radius: 30px;
         font-size: 0.9rem;
+        color: var(--azul_2);
     }
 
     .modal-btn {
-        background: #8B4513;
+        background: var(--azul_2);
         color: white;
         border: none;
         padding: 1rem 2rem;

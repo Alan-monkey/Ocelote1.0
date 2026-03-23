@@ -84,7 +84,7 @@
         <div class="results-panel">
             <div class="results-placeholder">
                 <div class="placeholder-icon">
-                    <i class="fas fa-coffee"></i>
+                    <i class="fas fa-tint"></i>
                 </div>
                 <h3>Resultados de Búsqueda</h3>
                 <p>Los detalles del producto aparecerán aquí después de realizar la búsqueda</p>

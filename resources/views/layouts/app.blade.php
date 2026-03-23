@@ -3,20 +3,32 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Café Sofft - Sistema de Gestión</title>
+    <title>AquaPura - Sistema de Gestión</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --cafe-oscuro: #8B4513;
-            --cafe-medio: #A0522D;
-            --cafe-claro: #D2691E;
-            --beige: #F5F5DC;
-            --crema: #FFF8DC;
-            --marron: #5D4037;
-            --dorado: #D4AF37;
+            --azul_1: #457b9d;
+            --azul_2: #132d46;
+            --azul_3: #a8dadc;
+            --azul_fuerte: #132d46;
+            --blanco: #f1faee;
+            --negrito: #151613;
+            --negrito_verde: #191e29;
+            --verde_azul: #07cdaf;
+            --amarillo_claro: #fffaca;
+            --amarillo: #e0d205;
+            --verde_obs: #1d3557;
             --gris-claro: #f8f9fa;
             --sombra-suave: 0 8px 30px rgba(0,0,0,0.12);
+            /* aliases para compatibilidad */
+            --cafe-oscuro: var(--azul_2);
+            --cafe-medio: var(--azul_1);
+            --cafe-claro: var(--azul_3);
+            --beige: var(--blanco);
+            --crema: var(--amarillo_claro);
+            --marron: var(--azul_fuerte);
+            --dorado: var(--verde_azul);
         }
 
         body {
@@ -442,7 +454,7 @@
                 max-width: 45%;
                 height: auto;
                 border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+                box-shadow: 0 10px 30px rgba(19, 45, 70, 0.2);
             }
         }
 
@@ -474,18 +486,18 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+            box-shadow: 0 4px 15px rgba(19, 45, 70, 0.3);
         }
 
         .inicio button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+            box-shadow: 0 6px 20px rgba(19, 45, 70, 0.4);
         }
 
         .services {
             padding: 4rem 1rem;
             text-align: center;
-            background: rgba(139, 69, 19, 0.05);
+            background: rgba(69, 123, 157, 0.05);
             border-radius: 15px;
             margin: 2rem 0;
         }
@@ -542,7 +554,7 @@
             padding: 4rem 2rem;
             background: linear-gradient(135deg, var(--cafe-claro) 0%, var(--cafe-medio) 100%);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+            box-shadow: 0 10px 30px rgba(19, 45, 70, 0.2);
             margin: 2rem 0;
             position: relative;
             overflow: hidden;
@@ -550,8 +562,8 @@
 
         .list .list-group-item {
             color: var(--beige);
-            background-color: rgba(93, 64, 55, 0.7);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            background-color: rgba(19, 45, 70, 0.7);
+            border: 1px solid rgba(7, 205, 175, 0.3);
             border-radius: 8px;
             margin-bottom: 10px;
             font-weight: 500;
@@ -559,7 +571,7 @@
         }
 
         .list .list-group-item:hover {
-            background-color: rgba(93, 64, 55, 0.9);
+            background-color: rgba(19, 45, 70, 0.9);
             transform: translateX(5px);
         }
 
@@ -602,7 +614,7 @@
     align-items: center;
     justify-content: center;
     font-size: 2rem; /* Ícono más grande */
-    box-shadow: 0 6px 25px rgba(139, 69, 19, 0.5);
+    box-shadow: 0 6px 25px rgba(19, 45, 70, 0.5);
     z-index: 1002;
     cursor: pointer;
     border: 3px solid var(--dorado);
@@ -755,10 +767,10 @@
             <div class="sidebar-brand">
                 <a href="#" class="brand-link">
                     <div class="brand-icon">
-                        <i class="fas fa-coffee"></i>
+                        <i class="fas fa-tint"></i>
                     </div>
                     <div class="brand-text-sidebar">
-                        <span class="brand-name-sidebar">Café Sofft</span>
+                        <span class="brand-name-sidebar">AquaPura</span>
                         <span class="brand-sub-sidebar">Sistema de Gestión</span>
                     </div>
                 </a>
@@ -791,6 +803,10 @@
                         <i class="fas fa-plus-circle"></i>
                         <span class="menu-text">Crear Producto</span>
                     </a>
+                    <a href="{{ route('ventas.index') }}" class="menu-item {{ request()->is('ventas') ? 'active' : '' }}">
+    <i class="fas fa-receipt"></i>
+    <span class="menu-text">Ver Ventas</span>
+</a>
                     <a href="/productos/leer" class="menu-item {{ request()->is('productos/leer') ? 'active' : '' }}">
                         <i class="fas fa-list"></i>
                         <span class="menu-text">Ver Productos</span>
@@ -817,9 +833,9 @@
                         <i class="fas fa-shopping-cart"></i>
                         <span class="menu-text">Carrito de Compras</span>
                     </a>
-                    <a href="{{ URL('/backups') }}" class="menu-item {{ request()->is('backups') ? 'active' : '' }}">
-                        <i class="fas fa-database"></i>
-                        <span class="menu-text">Respaldos</span>
+                    <a href="{{ URL('/insumos') }}" class="menu-item {{ request()->is('backups') ? 'active' : '' }}">
+                        <i class="fas fa-boxes"></i>
+                        <span class="menu-text">Insumos</span>
                     </a>
                 @elseif($usuario)
                     <!-- Menú Cliente -->
@@ -880,25 +896,25 @@
                 <section class="inicio">
                     <div class="content">
                         <div class="text">
-                            <h1>Bienvenido a Café Sofft</h1>
-                            <p>Disfruta de la mejor experiencia en gestión de cafetería con nuestro sistema integral. Desde el control de inventario hasta la gestión de pedidos, tenemos todo lo que necesitas para hacer crecer tu negocio.</p>
+                            <h1>Bienvenido a AquaPura</h1>
+                            <p>Disfruta de la mejor experiencia en gestión de purificadora de agua con nuestro sistema integral. Desde el control de inventario hasta la gestión de pedidos, tenemos todo lo que necesitas para hacer crecer tu negocio.</p>
                             <button>Descubre Más</button>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Café Sofft">
+                        <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="AquaPura">
                     </div>
                 </section>
 
                 <!-- Sección de servicios -->
                 <section class="services">
                     <h2>Nuestros Servicios</h2>
-                    <p>Ofrecemos una amplia gama de servicios para gestionar eficientemente tu cafetería y brindar la mejor experiencia a tus clientes.</p>
+                    <p>Ofrecemos una amplia gama de servicios para gestionar eficientemente tu purificadora de agua y brindar la mejor experiencia a tus clientes.</p>
                     <div class="grid">
                         <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Gestión de Inventario">
+                            <img src="https://images.unsplash.com/photo-1563351672-62b74891a28a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gestión de Inventario">
                             <p class="gallery-description">Gestión de Inventario</p>
                         </div>
                         <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Control de Pedidos">
+                            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Control de Pedidos">
                             <p class="gallery-description">Control de Pedidos</p>
                         </div>
                     </div>

@@ -61,9 +61,9 @@
                             <p>Protege y restaura tus datos de forma segura</p>
                         </div>
                         <div class="coffee-decoration">
-                            <span>☕</span>
+                            <span>💧</span>
                             <span>💾</span>
-                            <span>☕</span>
+                            <span>💧</span>
                         </div>
                     </div>
 

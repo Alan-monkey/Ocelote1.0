@@ -35,11 +35,11 @@
                     <div class="welcome-chip">
                         <i class="fas fa-seedling me-2"></i> Invitado
                     </div>
-                    <h1 class="hero-title">Bienvenido a CoffeSoft</h1>
+                    <h1 class="hero-title">Bienvenido a AquaPura</h1>
                     @endif
                     <p class="hero-description">
-                        La plataforma definitiva para transformar la gestión de tu cafetería.
-                        Control total, análisis en tiempo real y una experiencia diseñada para amantes del café.
+                        La plataforma definitiva para transformar la gestión de tu purificadora de agua.
+                        Control total, análisis en tiempo real y una experiencia diseñada para tu negocio.
                     </p>
                     <div class="hero-cta-group">
                         <button class="cta-primary">
@@ -66,7 +66,7 @@
                         </div>
                         <div class="main-cup">
                             <div class="steam-animation"></div>
-                            <i class="fas fa-mug-hot"></i>
+                            <i class="fas fa-tint"></i>
                         </div>
                         <div class="beans-spread">
                             <span></span><span></span><span></span><span></span><span></span>
@@ -88,7 +88,7 @@
             <div class="metrics-grid">
                 <div class="metric-item">
                     <div class="metric-value">150+</div>
-                    <div class="metric-label">Cafeterías activas</div>
+                    <div class="metric-label">Purificadoras activas</div>
                 </div>
                 <div class="metric-item">
                     <div class="metric-value">12k</div>
@@ -111,8 +111,8 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Todo lo que necesitas</span>
-                <h2 class="section-title-modern">Gestiona tu cafetería <span class="text-gradient">como un experto</span></h2>
-                <p class="section-subtitle-modern">Herramientas profesionales para el negocio del café</p>
+                <h2 class="section-title-modern">Gestiona tu purificadora <span class="text-gradient">como un experto</span></h2>
+                <p class="section-subtitle-modern">Herramientas profesionales para el negocio del agua</p>
             </div>
             <div class="features-grid-premium">
                 <div class="feature-card-premium">
@@ -190,8 +190,8 @@
     <div class="cta-final">
         <div class="container">
             <div class="cta-card">
-                <h2>¿Listo para transformar tu cafetería?</h2>
-                <p>Únete a cientos de dueños que ya confían en CoffeSoft</p>
+                <h2>¿Listo para transformar tu purificadora?</h2>
+                <p>Únete a cientos de dueños que ya confían en AquaPura</p>
                 
             </div>
         </div>

@@ -7,7 +7,7 @@
         <div class="header-content">
             <i class="fas fa-book-open"></i>
             <h1>Gestión de Menú</h1>
-            <p>Gestiona los productos disponibles en tu cafetería</p>
+            <p>Gestiona los productos disponibles en tu purificadora de agua</p>
         </div>
         <div class="coffee-decoration">
             <div class="coffee-mug"></div>
@@ -44,7 +44,7 @@
                     <tr class="coffee-table-row">
                         <td class="product-name">
                             <div class="name-wrapper">
-                                <i class="fas fa-coffee product-icon"></i>
+                                <i class="fas fa-tint product-icon"></i>
                                 <span>{{ $libro->nombre }}</span>
                             </div>
                         </td>
@@ -78,10 +78,10 @@
     @if($libros->isEmpty())
     <div class="empty-state">
         <div class="empty-icon">
-            <i class="fas fa-coffee"></i>
+            <i class="fas fa-tint"></i>
         </div>
         <h3>No hay productos en el menú</h3>
-        <p>Comienza agregando nuevos productos a tu cafetería</p>
+        <p>Comienza agregando nuevos productos a tu purificadora de agua</p>
         <button class="btn btn-primary">
             <i class="fas fa-plus"></i>
             Agregar Producto

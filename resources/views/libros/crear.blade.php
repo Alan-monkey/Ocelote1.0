@@ -18,10 +18,10 @@
             <!-- Header con icono -->
             <div class="form-header">
                 <div class="header-icon">
-                    <i class="fas fa-coffee"></i>
+                    <i class="fas fa-tint"></i>
                 </div>
                 <h1>Añadir Nuevo Producto</h1>
-                <p>Agrega un nuevo item al menú de tu cafetería</p>
+                <p>Agrega un nuevo item al catálogo de tu purificadora</p>
             </div>
 
             <!-- Formulario -->

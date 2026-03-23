@@ -48,12 +48,12 @@
                             <i class="fas fa-shopping-cart"></i>
                         </div>
                         <div class="header-title">
-                            <h4><i class="fas fa-coffee"></i> Carrito de Compras</h4>
+                            <h4><i class="fas fa-tint"></i> Carrito de Compras</h4>
                             <p>Revisa tus productos antes de pagar</p>
                         </div>
                         <div class="coffee-decoration-header">
                             <span>🛒</span>
-                            <span>☕</span>
+                            <span>💧</span>
                             <span>💰</span>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                                 <h3>Tu carrito está vacío</h3>
                                 <p>Agrega algunos productos deliciosos para continuar</p>
                                 <a href="/productos/leer" class="btn-ver-productos">
-                                    <i class="fas fa-coffee"></i> Ver Productos
+                                    <i class="fas fa-tint"></i> Ver Productos
                                 </a>
                             </div>
 
@@ -95,9 +95,9 @@
                             <div class="productos-sugeridos mt-5">
                                 <div class="seccion-header">
                                     <div class="header-decoration">
-                                        <i class="fas fa-mug-hot"></i>
+                                        <i class="fas fa-tint"></i>
                                         <i class="fas fa-star"></i>
-                                        <i class="fas fa-mug-hot"></i>
+                                        <i class="fas fa-tint"></i>
                                     </div>
                                     <h3>Productos disponibles</h3>
                                     <p>Comienza a llenar tu carrito con nuestras delicias</p>
@@ -106,9 +106,9 @@
                                 <div class="productos-grid">
                                     @foreach($productos as $producto)
                                         @php
-                                            $inventario = \App\Models\Inventario::where('producto_id', $producto->_id)->first();
-                                            $stock = $inventario ? $inventario->stock_actual : 0;
+                                            $stock = $producto->stock ?? 0;
                                         @endphp
+
                                         
                                         @if($stock > 0)
                                             <div class="producto-card-sugerido">
@@ -117,7 +117,7 @@
                                                         <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}">
                                                     @else
                                                         <div class="sugerido-placeholder">
-                                                            <i class="fas fa-coffee"></i>
+                                                            <i class="fas fa-tint"></i>
                                                         </div>
                                                     @endif
                                                     @if($stock < 10)
@@ -171,7 +171,7 @@
                                                                  class="producto-img">
                                                         @else
                                                             <div class="producto-img-placeholder">
-                                                                <i class="fas fa-coffee"></i>
+                                                                <i class="fas fa-tint"></i>
                                                             </div>
                                                         @endif
                                                         <div class="producto-detalles">
@@ -268,9 +268,9 @@
                             <div class="productos-destacados mt-5">
                                 <div class="seccion-header">
                                     <div class="header-decoration">
-                                        <i class="fas fa-coffee"></i>
+                                        <i class="fas fa-tint"></i>
                                         <i class="fas fa-plus-circle"></i>
-                                        <i class="fas fa-coffee"></i>
+                                        <i class="fas fa-tint"></i>
                                     </div>
                                     <h3>¿Quieres agregar más productos?</h3>
                                     <p>Selecciona de nuestros productos destacados</p>
@@ -279,12 +279,10 @@
                                 <div class="productos-grid-mini">
                                     @foreach($productos as $producto)
                                         @php
-                                            // Verificar si ya está en el carrito
                                             $enCarrito = isset($carrito[$producto->_id]);
-                                            // Obtener inventario
-                                            $inventario = \App\Models\Inventario::where('producto_id', $producto->_id)->first();
-                                            $stock = $inventario ? $inventario->stock_actual : 0;
+                                            $stock = $producto->stock ?? 0;
                                         @endphp
+
                                         
                                         @if(!$enCarrito && $stock > 0)
                                             <div class="producto-mini-card">
@@ -293,7 +291,7 @@
                                                         <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}">
                                                     @else
                                                         <div class="mini-placeholder">
-                                                            <i class="fas fa-coffee"></i>
+                                                            <i class="fas fa-tint"></i>
                                                         </div>
                                                     @endif
                                                 </div>
