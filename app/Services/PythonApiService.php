@@ -672,6 +672,54 @@ public function deleteAsignacionRuta($id)
 }
 
 
+// ===== REPARTIDOR - RUTAS ASIGNADAS =====
+
+public function getRutasRepartidor($repartidorId)
+{
+    try {
+        $response = Http::timeout($this->timeout)->get($this->baseUrl . "/repartidores/{$repartidorId}/rutas-asignadas");
+        if ($response->successful()) {
+            $data = $response->json();
+            return [
+                'success' => true,
+                'data' => $data['data'] ?? [],
+                'dia_actual' => $data['dia_actual'] ?? ''
+            ];
+        }
+        return ['success' => false, 'error' => 'Error al obtener rutas del repartidor'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::getRutasRepartidor: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function iniciarRuta($asignacionId)
+{
+    try {
+        $response = Http::timeout($this->timeout)->post($this->baseUrl . "/asignaciones-ruta/{$asignacionId}/iniciar");
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al iniciar ruta'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::iniciarRuta: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function marcarEntrega($asignacionId, $clienteIndex)
+{
+    try {
+        $response = Http::timeout($this->timeout)->post($this->baseUrl . "/asignaciones-ruta/{$asignacionId}/entregar/{$clienteIndex}");
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al marcar entrega'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::marcarEntrega: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
 
 
 }

@@ -33,7 +33,11 @@ Route::get('/password/show-link/{token}', [PasswordResetController::class, 'show
 Route::middleware(['auth:usuarios', 'check.user.type:1'])->group(function () {
     Route::get('/inicio', [LibrosController::class, 'inicioInv'])->name('inicio.invitado');
 
-    
+    Route::get('/repartidor/dashboard', [App\Http\Controllers\RepartidorDashboardController::class, 'index'])->name('repartidor.dashboard');
+    Route::post('/repartidor/iniciar-ruta', [App\Http\Controllers\RepartidorDashboardController::class, 'iniciarRuta'])->name('repartidor.iniciar');
+    Route::get('/repartidor/ruta/{id}', [App\Http\Controllers\RepartidorDashboardController::class, 'verRuta'])->name('repartidor.ruta');
+    Route::post('/repartidor/marcar-entrega', [App\Http\Controllers\RepartidorDashboardController::class, 'marcarEntrega'])->name('repartidor.marcar-entrega');
+
 
 
 

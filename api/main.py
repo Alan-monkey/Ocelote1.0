@@ -743,3 +743,90 @@ def delete_asignacion(asignacion_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ============= ENDPOINTS PARA REPARTIDORES =============
+
+@app.get("/repartidores/{repartidor_id}/rutas-asignadas")
+def get_rutas_repartidor(repartidor_id: str):
+    """
+    Obtiene las rutas asignadas a un repartidor específico con sus asignaciones activas
+    """
+    try:
+        from datetime import datetime
+        import locale
+        
+        # Obtener día actual
+        dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+        dia_actual = dias_semana[datetime.now().weekday()]
+        
+        # Buscar rutas del repartidor
+        rutas = list(rutas_reparto_col.find({"repartidor_id": repartidor_id}))
+        
+        # Enriquecer con asignaciones activas
+        for ruta in rutas:
+            ruta_id = str(ruta["_id"])
+            asignacion = asignaciones_col.find_one({
+                "ruta_id": ruta_id,
+                "estado": "activa"
+            })
+            ruta["asignacion_activa"] = serialize_doc(asignacion) if asignacion else None
+        
+        return {
+            "success": True,
+            "data": [serialize_doc(r) for r in rutas],
+            "dia_actual": dia_actual
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/asignaciones-ruta/{asignacion_id}/iniciar")
+def iniciar_ruta(asignacion_id: str):
+    """Marca una asignación como 'en_progreso'"""
+    try:
+        from datetime import datetime
+        existing = asignaciones_col.find_one({"_id": ObjectId(asignacion_id)})
+        if not existing:
+            raise HTTPException(status_code=404, detail="Asignación no encontrada")
+        
+        asignaciones_col.update_one(
+            {"_id": ObjectId(asignacion_id)},
+            {"$set": {
+                "estado": "en_progreso",
+                "fecha_inicio": datetime.utcnow().isoformat()
+            }}
+        )
+        actualizada = asignaciones_col.find_one({"_id": ObjectId(asignacion_id)})
+        return {"success": True, "data": serialize_doc(actualizada)}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/asignaciones-ruta/{asignacion_id}/entregar/{cliente_index}")
+def marcar_entrega(asignacion_id: str, cliente_index: int):
+    """Marca un cliente como entregado en la ruta"""
+    try:
+        existing = asignaciones_col.find_one({"_id": ObjectId(asignacion_id)})
+        if not existing:
+            raise HTTPException(status_code=404, detail="Asignación no encontrada")
+        
+        # Obtener la ruta asociada
+        ruta = rutas_reparto_col.find_one({"_id": ObjectId(existing["ruta_id"])})
+        if not ruta or not ruta.get("clientes"):
+            raise HTTPException(status_code=404, detail="Ruta o clientes no encontrados")
+        
+        # Marcar cliente como entregado
+        entregas = existing.get("entregas", [])
+        if cliente_index not in entregas:
+            entregas.append(cliente_index)
+        
+        asignaciones_col.update_one(
+            {"_id": ObjectId(asignacion_id)},
+            {"$set": {"entregas": entregas}}
+        )
+        
+        actualizada = asignaciones_col.find_one({"_id": ObjectId(asignacion_id)})
+        return {"success": True, "data": serialize_doc(actualizada)}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
