@@ -493,4 +493,185 @@ public function deleteCliente($id)
 }
 
 
+// ===== REPARTIDORES =====
+
+public function getRepartidores()
+{
+    try {
+        $response = Http::timeout($this->timeout)->get($this->baseUrl . '/usuarios/repartidores');
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al obtener repartidores'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::getRepartidores: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+
+public function createRepartidor($data)
+{
+    try {
+        $response = Http::timeout($this->timeout)->post($this->baseUrl . '/repartidores', $data);
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al crear repartidor'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::createRepartidor: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function updateRepartidor($id, $data)
+{
+    try {
+        $response = Http::timeout($this->timeout)->put($this->baseUrl . "/repartidores/{$id}", $data);
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al actualizar repartidor'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::updateRepartidor: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function deleteRepartidor($id)
+{
+    try {
+        $response = Http::timeout($this->timeout)->delete($this->baseUrl . "/repartidores/{$id}");
+        if ($response->successful()) {
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Error al eliminar repartidor'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::deleteRepartidor: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+// ===== RUTAS DE REPARTO =====
+
+public function getRutasReparto()
+{
+    try {
+        $response = Http::timeout($this->timeout)->get($this->baseUrl . '/rutas-reparto');
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al obtener rutas'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::getRutasReparto: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function createRutaReparto($data)
+{
+    try {
+        $response = Http::timeout($this->timeout)->post($this->baseUrl . '/rutas-reparto', $data);
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al crear ruta'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::createRutaReparto: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function updateRutaReparto($id, $data)
+{
+    try {
+        $response = Http::timeout($this->timeout)->put($this->baseUrl . "/rutas-reparto/{$id}", $data);
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al actualizar ruta'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::updateRutaReparto: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function deleteRutaReparto($id)
+{
+    try {
+        $response = Http::timeout($this->timeout)->delete($this->baseUrl . "/rutas-reparto/{$id}");
+        if ($response->successful()) {
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Error al eliminar ruta'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::deleteRutaReparto: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+// ===== ASIGNACIONES DE RUTA =====
+
+public function getAsignacionesRuta()
+{
+    try {
+        $response = Http::timeout($this->timeout)->get($this->baseUrl . '/asignaciones-ruta');
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al obtener asignaciones'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::getAsignacionesRuta: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function createAsignacionRuta($data)
+{
+    try {
+        $response = Http::timeout($this->timeout)->post($this->baseUrl . '/asignaciones-ruta', $data);
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        // Capturar errores de stock (400)
+        $body = $response->json();
+        $errores = $body['detail']['errores'] ?? [$body['detail'] ?? 'Error al crear asignación'];
+        return ['success' => false, 'errores' => $errores];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::createAsignacionRuta: ' . $e->getMessage());
+        return ['success' => false, 'errores' => [$e->getMessage()]];
+    }
+}
+
+public function updateAsignacionRuta($id, $data)
+{
+    try {
+        $response = Http::timeout($this->timeout)->put($this->baseUrl . "/asignaciones-ruta/{$id}", $data);
+        if ($response->successful()) {
+            return ['success' => true, 'data' => $response->json()['data'] ?? []];
+        }
+        return ['success' => false, 'error' => 'Error al actualizar asignación'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::updateAsignacionRuta: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+public function deleteAsignacionRuta($id)
+{
+    try {
+        $response = Http::timeout($this->timeout)->delete($this->baseUrl . "/asignaciones-ruta/{$id}");
+        if ($response->successful()) {
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Error al eliminar asignación'];
+    } catch (\Exception $e) {
+        Log::error('PythonApiService::deleteAsignacionRuta: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+
+
+
 }

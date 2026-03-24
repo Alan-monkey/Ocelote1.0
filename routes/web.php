@@ -10,6 +10,7 @@ use App\Http\Controllers\BackupController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\InsumosController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\RutasRepartoController;
 
 
 Route::get('/', function () {
@@ -32,6 +33,7 @@ Route::get('/password/show-link/{token}', [PasswordResetController::class, 'show
 Route::middleware(['auth:usuarios', 'check.user.type:1'])->group(function () {
     Route::get('/inicio', [LibrosController::class, 'inicioInv'])->name('inicio.invitado');
 
+    
 
 
 
@@ -111,5 +113,23 @@ Route::middleware(['auth:usuarios', 'check.user.type:0'])->group(function () {
     Route::post('/insumos/store', [InsumosController::class, 'store'])->name('insumos.store');
     Route::put('/insumos/{id}', [InsumosController::class, 'update'])->name('insumos.update');
     Route::post('/insumos/destroy', [InsumosController::class, 'destroy'])->name('insumos.destroy');
+
+
+
+
+    // Rutas de reparto (rutas estáticas ANTES de las dinámicas con {id})
+    Route::get('/rutas-reparto', [RutasRepartoController::class, 'index'])->name('rutas.index');
+    Route::post('/rutas-reparto', [RutasRepartoController::class, 'store'])->name('rutas.store');
+    Route::post('/rutas-reparto/destroy', [RutasRepartoController::class, 'destroy'])->name('rutas.destroy');
+
+    // Asignaciones de ruta (antes de la ruta dinámica {id})
+    Route::get('/rutas-reparto/asignaciones', [RutasRepartoController::class, 'asignaciones'])->name('rutas.asignaciones');
+    Route::post('/rutas-reparto/asignaciones', [RutasRepartoController::class, 'storeAsignacion'])->name('rutas.asignaciones.store');
+    Route::post('/rutas-reparto/asignaciones/finalizar', [RutasRepartoController::class, 'finalizarAsignacion'])->name('rutas.asignaciones.finalizar');
+    Route::post('/rutas-reparto/asignaciones/destroy', [RutasRepartoController::class, 'destroyAsignacion'])->name('rutas.asignaciones.destroy');
+
+    // Ruta dinámica al final para no capturar las rutas estáticas
+    Route::put('/rutas-reparto/{id}', [RutasRepartoController::class, 'update'])->name('rutas.update');
+
 
 });

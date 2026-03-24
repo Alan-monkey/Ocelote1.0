@@ -42,3 +42,6 @@ ventas_collection = db["ventas"]
 usuarios_collection = db["usuarios"]
 productos_collection = db["tb_productos"]
 clientes_collection = db["Clientes"]
+
+rutas_reparto_collection = db["RutasReparto"]
+

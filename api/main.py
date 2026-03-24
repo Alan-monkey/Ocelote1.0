@@ -272,6 +272,18 @@ def get_usuarios(limit: Optional[int] = 100):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/usuarios/repartidores")
+def get_repartidores():
+    try:
+        # Busca user_tipo 1 como string o como int
+        repartidores = list(config.usuarios_collection.find(
+            {"$or": [{"user_tipo": "1"}, {"user_tipo": 1}]}
+        ))
+        return {"data": [serialize_doc(r) for r in repartidores]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.get("/usuarios/{usuario_id}")
 def get_usuario(usuario_id: str):
     """Obtener un usuario específico por ID"""
@@ -510,3 +522,224 @@ def delete_cliente(cliente_id: str):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# ============= ENDPOINTS DE REPARTIDORES =============
+
+repartidores_col = config.db["Repartidores"]
+rutas_reparto_col = config.db["RutasReparto"]
+
+@app.get("/repartidores")
+def get_repartidores(limit: Optional[int] = 100):
+    try:
+        repartidores = list(repartidores_col.find().limit(limit))
+        return {"data": [serialize_doc(r) for r in repartidores]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/repartidores/{repartidor_id}")
+def get_repartidor(repartidor_id: str):
+    try:
+        r = repartidores_col.find_one({"_id": ObjectId(repartidor_id)})
+        if not r:
+            raise HTTPException(status_code=404, detail="Repartidor no encontrado")
+        return {"data": serialize_doc(r)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/repartidores")
+def create_repartidor(data: dict):
+    try:
+        from datetime import datetime
+        data["fecha_registro"] = datetime.utcnow().isoformat()
+        result = repartidores_col.insert_one(data)
+        nuevo = repartidores_col.find_one({"_id": result.inserted_id})
+        return {"success": True, "data": serialize_doc(nuevo)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.put("/repartidores/{repartidor_id}")
+def update_repartidor(repartidor_id: str, data: dict):
+    try:
+        existing = repartidores_col.find_one({"_id": ObjectId(repartidor_id)})
+        if not existing:
+            raise HTTPException(status_code=404, detail="Repartidor no encontrado")
+        repartidores_col.update_one({"_id": ObjectId(repartidor_id)}, {"$set": data})
+        actualizado = repartidores_col.find_one({"_id": ObjectId(repartidor_id)})
+        return {"success": True, "data": serialize_doc(actualizado)}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/repartidores/{repartidor_id}")
+def delete_repartidor(repartidor_id: str):
+    try:
+        r = repartidores_col.find_one({"_id": ObjectId(repartidor_id)})
+        if not r:
+            raise HTTPException(status_code=404, detail="Repartidor no encontrado")
+        repartidores_col.delete_one({"_id": ObjectId(repartidor_id)})
+        return {"success": True, "message": "Repartidor eliminado"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ============= ENDPOINTS DE RUTAS DE REPARTO =============
+
+@app.get("/rutas-reparto")
+def get_rutas(limit: Optional[int] = 100):
+    try:
+        rutas = list(rutas_reparto_col.find().limit(limit))
+        return {"data": [serialize_doc(r) for r in rutas]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/rutas-reparto/{ruta_id}")
+def get_ruta(ruta_id: str):
+    try:
+        ruta = rutas_reparto_col.find_one({"_id": ObjectId(ruta_id)})
+        if not ruta:
+            raise HTTPException(status_code=404, detail="Ruta no encontrada")
+        return {"data": serialize_doc(ruta)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/rutas-reparto")
+def create_ruta(data: dict):
+    try:
+        from datetime import datetime
+        data["fecha_creacion"] = datetime.utcnow().isoformat()
+        result = rutas_reparto_col.insert_one(data)
+        nueva = rutas_reparto_col.find_one({"_id": result.inserted_id})
+        return {"success": True, "data": serialize_doc(nueva)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.put("/rutas-reparto/{ruta_id}")
+def update_ruta(ruta_id: str, data: dict):
+    try:
+        existing = rutas_reparto_col.find_one({"_id": ObjectId(ruta_id)})
+        if not existing:
+            raise HTTPException(status_code=404, detail="Ruta no encontrada")
+        rutas_reparto_col.update_one({"_id": ObjectId(ruta_id)}, {"$set": data})
+        actualizada = rutas_reparto_col.find_one({"_id": ObjectId(ruta_id)})
+        return {"success": True, "data": serialize_doc(actualizada)}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/rutas-reparto/{ruta_id}")
+def delete_ruta(ruta_id: str):
+    try:
+        ruta = rutas_reparto_col.find_one({"_id": ObjectId(ruta_id)})
+        if not ruta:
+            raise HTTPException(status_code=404, detail="Ruta no encontrada")
+        rutas_reparto_col.delete_one({"_id": ObjectId(ruta_id)})
+        return {"success": True, "message": "Ruta eliminada"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/usuarios/repartidores")
+def get_repartidores():
+    try:
+        repartidores = list(config.usuarios_collection.find({"user_tipo": 1}))
+        return {"data": [serialize_doc(r) for r in repartidores]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ============= ENDPOINTS DE HABILITAR RUTAS =============
+
+asignaciones_col = config.db["AsignacionesRuta"]
+
+@app.get("/asignaciones-ruta")
+def get_asignaciones(limit: Optional[int] = 100):
+    try:
+        items = list(asignaciones_col.find().limit(limit))
+        return {"data": [serialize_doc(i) for i in items]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/asignaciones-ruta")
+def create_asignacion(data: dict):
+    """
+    Crea una asignación de ruta y descuenta inventario.
+    Espera: { ruta_id, titulo, dia, garrafones: [{producto_id, nombre, cantidad}] }
+    """
+    try:
+        from datetime import datetime
+
+        garrafones = data.get("garrafones", [])
+        errores = []
+
+        # 1. Verificar stock suficiente para todos los productos
+        for item in garrafones:
+            inv = config.inventario_collection.find_one({"producto_id": item["producto_id"]})
+            if not inv:
+                errores.append(f"No se encontró inventario para '{item['nombre']}'")
+                continue
+
+            stock_disponible = int(inv.get("stock_actual", 0))
+            cantidad_requerida = int(item["cantidad"])
+
+            if stock_disponible < cantidad_requerida:
+                errores.append(
+                    f"Stock insuficiente para '{item['nombre']}': "
+                    f"disponible {stock_disponible}, requerido {cantidad_requerida}"
+                )
+
+        if errores:
+            raise HTTPException(status_code=400, detail={"errores": errores})
+
+        # 2. Descontar inventario
+        for item in garrafones:
+            config.inventario_collection.update_one(
+                {"producto_id": item["producto_id"]},
+                {
+                    "$inc": {"stock_actual": -int(item["cantidad"])},
+                    "$set": {"fecha_actualizacion": datetime.utcnow().isoformat()}
+                }
+            )
+
+        # 3. Guardar asignación con estado "activa"
+        data["estado"] = "activa"
+        data["fecha_asignacion"] = datetime.utcnow().isoformat()
+        result = asignaciones_col.insert_one(data)
+        nueva = asignaciones_col.find_one({"_id": result.inserted_id})
+        return {"success": True, "data": serialize_doc(nueva)}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.put("/asignaciones-ruta/{asignacion_id}")
+def update_asignacion(asignacion_id: str, data: dict):
+    try:
+        existing = asignaciones_col.find_one({"_id": ObjectId(asignacion_id)})
+        if not existing:
+            raise HTTPException(status_code=404, detail="Asignación no encontrada")
+        asignaciones_col.update_one({"_id": ObjectId(asignacion_id)}, {"$set": data})
+        actualizada = asignaciones_col.find_one({"_id": ObjectId(asignacion_id)})
+        return {"success": True, "data": serialize_doc(actualizada)}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/asignaciones-ruta/{asignacion_id}")
+def delete_asignacion(asignacion_id: str):
+    try:
+        item = asignaciones_col.find_one({"_id": ObjectId(asignacion_id)})
+        if not item:
+            raise HTTPException(status_code=404, detail="Asignación no encontrada")
+        asignaciones_col.delete_one({"_id": ObjectId(asignacion_id)})
+        return {"success": True, "message": "Asignación eliminada"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+

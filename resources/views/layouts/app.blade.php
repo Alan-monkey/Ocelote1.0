@@ -799,20 +799,10 @@
                         <i class="fas fa-home"></i>
                         <span class="menu-text">Inicio</span>
                     </a>
-                    <a href="/productos/crear" class="menu-item {{ request()->is('productos/crear') ? 'active' : '' }}">
-                        <i class="fas fa-plus-circle"></i>
-                        <span class="menu-text">Crear Producto</span>
+                    <a href="{{ route('rutas.asignaciones') }}" class="menu-item {{ request()->is('rutas.asignaciones') ? 'active' : '' }}">
+                        <i class="fas fa-truck-loading"></i>
+                        <span class="menu-text">Asignar Rutas</span>
                     </a>
-                    <a href="{{ route('ventas.index') }}" class="menu-item {{ request()->is('ventas') ? 'active' : '' }}">
-    <i class="fas fa-receipt"></i>
-    <span class="menu-text">Ver Ventas</span>
-</a>
-                    <a href="/productos/leer" class="menu-item {{ request()->is('productos/leer') ? 'active' : '' }}">
-                        <i class="fas fa-list"></i>
-                        <span class="menu-text">Ver Productos</span>
-                    </a>
-                    
-                    <!-- ===== NUEVA OPCIÓN DE INVENTARIO PARA EMPLEADOS ===== -->
                     <a href="/inventario" class="menu-item {{ request()->is('inventario') ? 'active' : '' }}">
                         <i class="fas fa-warehouse"></i>
                         <span class="menu-text">Inventario</span>
@@ -820,23 +810,37 @@
                             <span class="badge-menu">{{ $bajo_stock_count }}</span>
                         @endif
                     </a>
-                    
-                    <a href="/productos/eliminar" class="menu-item {{ request()->is('productos/eliminar') ? 'active' : '' }}">
-                        <i class="fas fa-trash-alt"></i>
-                        <span class="menu-text">Eliminar Productos</span>
-                    </a>
-                    <a href="{{ URL('/libros/registrarse') }}" class="menu-item {{ request()->is('libros/registrarse') ? 'active' : '' }}">
-                        <i class="fas fa-user-plus"></i>
-                        <span class="menu-text">Registrar Usuario</span>
-                    </a>
                     <a href="{{ URL('/carrito') }}" class="menu-item {{ request()->is('carrito') ? 'active' : '' }}">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="menu-text">Carrito de Compras</span>
+                        <span class="menu-text">Carrito</span>
                     </a>
                     <a href="{{ URL('/insumos') }}" class="menu-item {{ request()->is('backups') ? 'active' : '' }}">
                         <i class="fas fa-boxes"></i>
                         <span class="menu-text">Insumos</span>
                     </a>
+                    <a href="/productos/crear" class="menu-item {{ request()->is('productos/crear') ? 'active' : '' }}">
+                        <i class="fas fa-plus-circle"></i>
+                        <span class="menu-text">Crear Producto</span>
+                    </a>
+                    <a href="{{ route('ventas.index') }}" class="menu-item {{ request()->is('ventas') ? 'active' : '' }}">
+                        <i class="fas fa-receipt"></i>
+                        <span class="menu-text">Ver Ventas</span>
+                    </a>
+                    <a href="/productos/leer" class="menu-item {{ request()->is('productos/leer') ? 'active' : '' }}">
+                        <i class="fas fa-list"></i>
+                        <span class="menu-text">Ver Productos</span>
+                    </a>
+                        
+                    <a href="/rutas-reparto" class="menu-item {{ request()->is('/rutas-reparto') ? 'active' : '' }}">
+                        <i class="fas fa-truck-loading"></i>
+                        <span class="menu-text">Crear Rutas</span>
+                    </a>
+                    <a href="{{ URL('/libros/registrarse') }}" class="menu-item {{ request()->is('libros/registrarse') ? 'active' : '' }}">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="menu-text">Registrar Usuario</span>
+                    </a>
+                    
+                    
                 @elseif($usuario)
                     <!-- Menú Cliente -->
                     <a href="/productos/leer" class="menu-item {{ request()->is('productos/leer') ? 'active' : '' }}">
@@ -854,6 +858,9 @@
                         <i class="fas fa-shopping-cart"></i>
                         <span class="menu-text">Carrito de Compras</span>
                     </a>
+
+                    
+
                 @else
                     <!-- Menú Invitado -->
                     <a href="{{ route('login') }}" class="menu-item">
