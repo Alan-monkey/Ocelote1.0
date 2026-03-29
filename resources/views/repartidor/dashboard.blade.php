@@ -2,23 +2,130 @@
 @section('content')
 
 <style>
-:root { --azul_1:#457b9d; --azul_2:#132d46; --azul_3:#a8dadc; --blanco:#f1faee; --verde_azul:#07cdaf; }
-.dashboard-container { min-height:100vh; background:linear-gradient(145deg,#e8f4f8,#d0eaf0); padding:30px 0; font-family:'Poppins','Segoe UI',sans-serif; }
-.welcome-card { background:linear-gradient(135deg,var(--azul_2),var(--azul_1)); color:white; border-radius:24px; padding:30px; margin-bottom:30px; box-shadow:0 10px 30px rgba(19,45,70,.2); }
-.welcome-card h2 { margin:0 0 8px; font-weight:700; }
-.welcome-card p { margin:0; opacity:.9; font-size:1.05rem; }
-.ruta-card { background:white; border-radius:20px; padding:24px; margin-bottom:20px; box-shadow:0 8px 20px rgba(19,45,70,.08); transition:all .3s; border:3px solid transparent; }
-.ruta-card.hoy { border-color:var(--verde_azul); box-shadow:0 12px 30px rgba(7,205,175,.2); }
-.ruta-card:hover { transform:translateY(-4px); box-shadow:0 12px 30px rgba(19,45,70,.12); }
-.badge-dia { background:var(--azul_3); color:var(--azul_2); padding:6px 16px; border-radius:20px; font-size:.85rem; font-weight:700; display:inline-block; }
-.badge-hoy { background:var(--verde_azul); color:white; padding:6px 16px; border-radius:20px; font-size:.85rem; font-weight:700; display:inline-block; animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
-.btn-iniciar { background:linear-gradient(135deg,var(--verde_azul),var(--azul_1)); color:white; border:none; border-radius:12px; padding:12px 28px; font-weight:700; font-size:1.05rem; cursor:pointer; transition:all .3s; box-shadow:0 4px 15px rgba(7,205,175,.3); }
-.btn-iniciar:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(7,205,175,.5); }
-.clientes-preview { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-.cliente-mini { background:#f0f8fb; padding:6px 12px; border-radius:10px; font-size:.85rem; color:var(--azul_2); font-weight:600; }
-.sin-rutas { text-align:center; padding:60px 20px; }
-.sin-rutas i { font-size:4rem; color:var(--azul_3); opacity:.5; margin-bottom:20px; }
+:root 
+{ 
+    --azul_1:#457b9d; 
+    --azul_2:#132d46; 
+    --azul_3:#a8dadc; 
+    --blanco:#f1faee; 
+    --verde_azul:#07cdaf; 
+}
+.dashboard-container 
+{ 
+    min-height:100vh; 
+    background:linear-gradient(145deg,#e8f4f8,#d0eaf0); 
+    padding:30px 0; 
+    font-family:'Poppins','Segoe UI',sans-serif; 
+}
+.welcome-card 
+{ 
+    background:linear-gradient(135deg,var(--azul_2),var(--azul_1)); 
+    color:white; 
+    border-radius:24px; 
+    padding:30px; 
+    margin-bottom:30px; 
+    box-shadow:0 10px 30px rgba(19,45,70,.2); 
+}
+.welcome-card h2 
+{ 
+    margin:0 0 8px; 
+    font-weight:700; 
+}
+.welcome-card p 
+{ 
+    margin:0; 
+    opacity:.9; 
+    font-size:1.05rem; 
+}
+.ruta-card 
+{ 
+    background:white; 
+    border-radius:20px; 
+    padding:24px; 
+    margin-bottom:20px; 
+    box-shadow:0 8px 20px rgba(19,45,70,.08); 
+    transition:all .3s; 
+    border:3px solid transparent; 
+}
+.ruta-card.hoy 
+{ 
+    border-color:var(--verde_azul); 
+    box-shadow:0 12px 30px rgba(7,205,175,.2); 
+}
+.ruta-card:hover 
+{ 
+    transform:translateY(-4px); 
+    box-shadow:0 12px 30px rgba(19,45,70,.12); 
+}
+.badge-dia 
+{ 
+    background:var(--azul_3); 
+    color:var(--azul_2); 
+    padding:6px 16px; 
+    border-radius:20px; 
+    font-size:.85rem; 
+    font-weight:700; 
+    display:inline-block; 
+}
+.badge-hoy 
+{ 
+    background:var(--verde_azul); 
+    color:white; 
+    padding:6px 16px; 
+    border-radius:20px; 
+    font-size:.85rem; 
+    font-weight:700; 
+    display:inline-block; 
+    animation:pulse 2s infinite; 
+}
+@keyframes pulse 
+{ 0%,100%{transform:scale(1);} 
+50%{transform:scale(1.05);} 
+}
+.btn-iniciar 
+{ 
+    background:linear-gradient(135deg,var(--verde_azul),var(--azul_1)); 
+    color:white; border:none; border-radius:12px; 
+    padding:12px 28px; 
+    font-weight:700; 
+    font-size:1.05rem; 
+    cursor:pointer; 
+    transition:all .3s; 
+    box-shadow:0 4px 15px rgba(7,205,175,.3); 
+}
+.btn-iniciar:hover 
+{ 
+    transform:translateY(-2px); 
+    box-shadow:0 6px 20px rgba(7,205,175,.5); 
+}
+.clientes-preview 
+{ 
+    display:flex; 
+    flex-wrap:wrap; 
+    gap:8px; 
+    margin-top:12px; 
+}
+.cliente-mini 
+{ 
+    background:#f0f8fb; 
+    padding:6px 12px; 
+    border-radius:10px; 
+    font-size:.85rem; 
+    color:var(--azul_2); 
+    font-weight:600; 
+}
+.sin-rutas 
+{ 
+    text-align:center; 
+    padding:60px 20px; 
+}
+.sin-rutas i 
+{ 
+    font-size:4rem; 
+    color:var(--azul_3); 
+    opacity:.5; 
+    margin-bottom:20px; 
+}
 </style>
 
 <div class="dashboard-container">

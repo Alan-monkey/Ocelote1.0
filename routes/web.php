@@ -37,6 +37,8 @@ Route::middleware(['auth:usuarios', 'check.user.type:1'])->group(function () {
     Route::post('/repartidor/iniciar-ruta', [App\Http\Controllers\RepartidorDashboardController::class, 'iniciarRuta'])->name('repartidor.iniciar');
     Route::get('/repartidor/ruta/{id}', [App\Http\Controllers\RepartidorDashboardController::class, 'verRuta'])->name('repartidor.ruta');
     Route::post('/repartidor/marcar-entrega', [App\Http\Controllers\RepartidorDashboardController::class, 'marcarEntrega'])->name('repartidor.marcar-entrega');
+    Route::post('/repartidor/venta-ruta', [App\Http\Controllers\RepartidorDashboardController::class, 'registrarVentaRuta'])->name('repartidor.venta-ruta');
+    Route::post('/repartidor/terminar-ruta', [App\Http\Controllers\RepartidorDashboardController::class, 'terminarRuta'])->name('repartidor.terminar-ruta');
 
 
 
