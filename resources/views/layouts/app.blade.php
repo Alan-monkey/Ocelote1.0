@@ -848,15 +848,10 @@
                         <span class="menu-text">Ver Productos</span>
                     </a>
                     
-                    <!-- ===== NUEVA OPCIÓN DE INVENTARIO PARA CLIENTE (SOLO VER) ===== -->
-                    <a href="clientes" class="menu-item {{ request()->is('clientes') ? 'active' : '' }}">
-                        <i class="fas fa-boxes"></i>
-                        <span class="menu-text">Crear Cliente</span>
-                    </a>
                     
-                    <a href="{{ URL('/carrito') }}" class="menu-item {{ request()->is('carrito') ? 'active' : '' }}">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="menu-text">Carrito de Compras</span>
+                    <a href="/repartidor/dashboard" class="menu-item {{ request()->is('rutas.asignaciones') ? 'active' : '' }}">
+                        <i class="fas fa-truck-loading"></i>
+                        <span class="menu-text">Comenzar Ruta</span>
                     </a>
 
                     

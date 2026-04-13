@@ -130,7 +130,8 @@
     <div style="background:white; border-radius:20px; padding:20px 28px; box-shadow:0 8px 20px rgba(19,45,70,.08); margin-bottom:24px;">
         <div class="d-flex align-items-center gap-3 flex-wrap">
             <div style="background:linear-gradient(135deg,#0ea5e9,#0369a1); border-radius:14px; padding:14px 18px; color:white; text-align:center; min-width:90px;">
-                <div style="font-size:2rem; font-weight:800; line-height:1;">{{ $totalGarrafones }}</div>
+            @php $totalRestante = array_sum(array_column($garrafonesStock, 'cantidad')); @endphp
+            <div id="totalGarrafonesDisplay" style="font-size:2rem; font-weight:800; line-height:1;">{{ $totalRestante }}</div>
                 <div style="font-size:.7rem; opacity:.9; margin-top:2px;">garrafones</div>
             </div>
             <div class="flex-grow-1">
@@ -138,12 +139,15 @@
                     <i class="fas fa-tint me-1" style="color:#0ea5e9;"></i>Garrafones asignados a esta ruta
                 </p>
                 <div class="d-flex flex-wrap gap-2">
-                    @foreach($garrafones as $g)
-                        @php $g = is_array($g) ? $g : (array)$g; @endphp
-                        <span style="background:#e0f2fe; color:#0369a1; border-radius:20px; padding:4px 12px; font-size:.78rem; font-weight:600;">
-                            {{ $g['nombre'] ?? 'Producto' }}: <strong>{{ $g['cantidad'] ?? 0 }}</strong>
+                    @foreach($garrafonesStock as $idx => $g)
+                        <span id="chip-garrafon-{{ $idx }}"
+                            style="background:{{ $g['cantidad'] == 0 ? '#fee2e2' : '#e0f2fe' }};
+                                    color:{{ $g['cantidad'] == 0 ? '#dc2626' : '#0369a1' }};
+                                    border-radius:20px; padding:4px 12px; font-size:.78rem; font-weight:600;">
+                            {{ $g['nombre'] }}: <strong id="chip-cant-{{ $idx }}">{{ $g['cantidad'] }}</strong>
                         </span>
                     @endforeach
+
                 </div>
             </div>
             <div style="background:linear-gradient(135deg,#059669,#047857); border-radius:14px; padding:14px 18px; color:white; text-align:center; min-width:110px;">
@@ -196,6 +200,12 @@
         const SVG_W = {{ $svgW }};
         const SVG_H = {{ $svgH }};
         const roadPoints = @json($roadPoints);
+
+        // Stock de garrafones (mutable)
+        let garrafonesStock = @json($garrafonesStock);
+        let totalGarrafonesRestantes = garrafonesStock.reduce((s, g) => s + g.cantidad, 0);
+
+
 
         const clientesData = {
             @foreach($clientes as $index => $cliente)
@@ -338,6 +348,16 @@
                 <div id="res-productos" class="d-flex flex-wrap gap-2"></div>
             </div>
 
+            {{-- Garrafones vacíos recibidos --}}
+            <div style="margin-bottom:16px;" id="res-vacios-wrap">
+                <p style="font-size:.82rem;font-weight:700;color:var(--azul_2);margin-bottom:8px;">
+                    <i class="fas fa-recycle me-1" style="color:#0ea5e9;"></i>Garrafones vacíos recibidos
+                </p>
+                <div id="res-vacios" class="d-flex flex-wrap gap-2">
+                    <span style="color:#9ca3af;font-size:.8rem;">Ninguno registrado</span>
+                </div>
+            </div>
+
             {{-- Clientes atendidos --}}
             <div style="margin-bottom:20px;">
                 <p style="font-size:.82rem;font-weight:700;color:var(--azul_2);margin-bottom:8px;">
@@ -391,6 +411,43 @@
                 <span class="amount" id="mv-total">$0.00</span>
             </div>
 
+            {{-- Garrafones vacíos (opcional) --}}
+            <div style="border:2px dashed #d0eaf0;border-radius:14px;padding:14px;margin-bottom:16px;">
+                <div class="d-flex align-items-center justify-content-between mb-2" style="cursor:pointer;" onclick="toggleVacios()">
+                    <span style="font-size:.82rem;font-weight:700;color:var(--azul_2);">
+                        <i class="fas fa-recycle me-1" style="color:#0ea5e9;"></i>Agregar garrafón vacío
+                        <span style="font-size:.7rem;font-weight:400;color:#6b7280;">(opcional)</span>
+                    </span>
+                    <i class="fas fa-chevron-down" id="vaciosChevron" style="color:#94a3b8;transition:transform .2s;"></i>
+                </div>
+                <p style="font-size:.72rem;color:#f59e0b;font-weight:600;margin:0 0 10px;display:none;" id="vaciosAviso">
+                    <i class="fas fa-exclamation-triangle me-1"></i>Solo seleccionar garrafones
+                </p>
+                <div id="vaciosPanel" style="display:none;">
+                    <div id="vaciosLista">
+                        @foreach($insumosList as $ins)
+                        <div class="d-flex align-items-center gap-2 mb-2" id="vacio-row-{{ $ins->_id }}">
+                            <label style="flex:1;font-size:.8rem;font-weight:600;color:var(--azul_2);cursor:pointer;display:flex;align-items:center;gap:8px;">
+                                <input type="checkbox"
+                                       id="vacio-chk-{{ $ins->_id }}"
+                                       value="{{ $ins->_id }}"
+                                       data-nombre="{{ addslashes($ins->nombre) }}"
+                                       onchange="toggleVacioInput('{{ $ins->_id }}')"
+                                       style="width:16px;height:16px;accent-color:var(--azul_1);">
+                                {{ $ins->nombre }}
+                            </label>
+                            <input type="number"
+                                   id="vacio-cant-{{ $ins->_id }}"
+                                   min="1" placeholder="Cant."
+                                   style="width:80px;border:2px solid #d0eaf0;border-radius:10px;padding:6px 10px;font-size:.85rem;font-weight:600;outline:none;display:none;"
+                                   onfocus="this.style.borderColor='var(--azul_1)'"
+                                   onblur="this.style.borderColor='#d0eaf0'">
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
             <div class="d-flex flex-column gap-2">
                 <button class="btn-vender" onclick="confirmarVenta()">
                     <i class="fas fa-check-circle me-2"></i>Confirmar Venta
@@ -402,6 +459,48 @@
 </div>
 
 <script>
+/* ---- Garrafones vacíos ---- */
+function toggleVacios() {
+    const panel   = document.getElementById('vaciosPanel');
+    const aviso   = document.getElementById('vaciosAviso');
+    const chevron = document.getElementById('vaciosChevron');
+    const open    = panel.style.display === 'none';
+    panel.style.display  = open ? 'block' : 'none';
+    aviso.style.display  = open ? 'block' : 'none';
+    chevron.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+function toggleVacioInput(id) {
+    const chk   = document.getElementById('vacio-chk-' + id);
+    const input = document.getElementById('vacio-cant-' + id);
+    input.style.display = chk.checked ? 'block' : 'none';
+    if (chk.checked) { input.value = 1; input.focus(); }
+    else input.value = '';
+}
+
+function resetVacios() {
+    document.querySelectorAll('[id^="vacio-chk-"]').forEach(chk => {
+        chk.checked = false;
+        const id    = chk.value;
+        const input = document.getElementById('vacio-cant-' + id);
+        if (input) { input.style.display = 'none'; input.value = ''; }
+    });
+    document.getElementById('vaciosPanel').style.display  = 'none';
+    document.getElementById('vaciosAviso').style.display  = 'none';
+    document.getElementById('vaciosChevron').style.transform = 'rotate(0deg)';
+}
+
+function getVaciosSeleccionados() {
+    const vacios = [];
+    document.querySelectorAll('[id^="vacio-chk-"]:checked').forEach(chk => {
+        const id     = chk.value;
+        const nombre = chk.dataset.nombre;
+        const cant   = parseInt(document.getElementById('vacio-cant-' + id)?.value) || 0;
+        if (cant > 0) vacios.push({ id, nombre, cantidad: cant });
+    });
+    return vacios;
+}
+
 /* ---- Helpers ---- */
 function pctToWrapPx(leftPct, topPct) {
     const wrap = document.getElementById('roadmapWrap');
@@ -442,6 +541,13 @@ function abrirVenta(index) {
     const pin = document.getElementById('pin-' + index);
     if (!c || (pin && pin.classList.contains('entregado'))) return;
 
+    // Bloquear si no hay garrafones
+    if (totalGarrafonesRestantes <= 0) {
+        alert('No quedan garrafones disponibles. Termina la ruta.');
+        return;
+    }
+
+
     document.getElementById('mv-index').value      = index;
     document.getElementById('mv-cliente-id').value = c.id;
     document.getElementById('mv-nombre').textContent = c.nombre;
@@ -462,6 +568,7 @@ function abrirVenta(index) {
 
 function cerrarVenta() {
     document.getElementById('modalVenta').classList.remove('show');
+    resetVacios();
 }
 
 function calcularTotal() {
@@ -496,13 +603,14 @@ function confirmarVenta() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
         body: JSON.stringify({
-            asignacion_id:  ASIGNACION_ID,
-            cliente_index:  index,
-            cliente_id:     clienteId,
-            cliente_nombre: c.nombre,
-            cantidad:       cantidad,
-            precio:         precio,
-            garrafones:     garrafonesAsignacion,
+            asignacion_id:      ASIGNACION_ID,
+            cliente_index:      index,
+            cliente_id:         clienteId,
+            cliente_nombre:     c.nombre,
+            cantidad:           cantidad,
+            precio:             precio,
+            garrafones:         garrafonesAsignacion,
+            garrafones_vacios:  getVaciosSeleccionados(),
         })
     })
     .then(r => r.json())
@@ -543,12 +651,75 @@ function confirmarVenta() {
         if (entregadosCount >= TOTAL_CLIENTES) {
             document.getElementById('btnTerminarWrap').style.display = '';
         }
+        // Descontar garrafones vendidos
+        const cantVendida = parseFloat(document.getElementById('mv-cantidad').value)
+                            || parseFloat(clientesData[index]?.garrafones_estimados) || 1;
+        if (data.stock_garrafones) {
+            garrafonesStock = data.stock_garrafones;
+            totalGarrafonesRestantes = garrafonesStock.reduce((s, g) => s + g.cantidad, 0);
+            actualizarChipsGarrafones();
+        }
+
+
     })
     .catch(() => {
         btnVender.disabled = false;
         btnVender.innerHTML = '<i class="fas fa-check-circle me-2"></i>Confirmar Venta';
         alert('Error de conexión');
     });
+}
+
+function actualizarChipsGarrafones() {
+    document.getElementById('totalGarrafonesDisplay').textContent = totalGarrafonesRestantes;
+    garrafonesStock.forEach((g, i) => {
+        const chipCant = document.getElementById('chip-cant-' + i);
+        const chip     = document.getElementById('chip-garrafon-' + i);
+        if (chipCant) chipCant.textContent = g.cantidad;
+        if (chip) {
+            chip.style.background = g.cantidad === 0 ? '#fee2e2' : '#e0f2fe';
+            chip.style.color      = g.cantidad === 0 ? '#dc2626' : '#0369a1';
+        }
+    });
+    if (totalGarrafonesRestantes <= 0) {
+        document.querySelectorAll('.pin-wrap:not(.entregado)').forEach(pin => {
+            pin.style.opacity = '0.4';
+            pin.style.cursor  = 'not-allowed';
+            pin.onclick = () => alert('No quedan garrafones disponibles. Termina la ruta.');
+        });
+    }
+}
+
+function descontarGarrafones(cantidadTotal) {
+    // Distribuye el descuento proporcionalmente entre los tipos de garrafón
+    let restante = cantidadTotal;
+    for (let i = 0; i < garrafonesStock.length && restante > 0; i++) {
+        const descuento = Math.min(garrafonesStock[i].cantidad, restante);
+        garrafonesStock[i].cantidad -= descuento;
+        restante -= descuento;
+        // Actualizar chip visual
+        const chipCant = document.getElementById('chip-cant-' + i);
+        if (chipCant) chipCant.textContent = garrafonesStock[i].cantidad;
+        // Chip rojo si llegó a 0
+        const chip = document.getElementById('chip-garrafon-' + i);
+        if (chip && garrafonesStock[i].cantidad === 0) {
+            chip.style.background = '#fee2e2';
+            chip.style.color = '#dc2626';
+        }
+    }
+    // Actualizar contador total
+    totalGarrafonesRestantes = garrafonesStock.reduce((s, g) => s + g.cantidad, 0);
+    document.getElementById('totalGarrafonesDisplay').textContent = totalGarrafonesRestantes;
+
+    // Si no quedan garrafones, bloquear todos los pins pendientes
+    if (totalGarrafonesRestantes <= 0) {
+        document.querySelectorAll('.pin-wrap:not(.entregado)').forEach(pin => {
+            pin.style.opacity = '0.4';
+            pin.style.cursor  = 'not-allowed';
+            pin.onclick = () => {
+                alert('No quedan garrafones disponibles. Termina la ruta.');
+            };
+        });
+    }
 }
 
 function terminarRuta() {
@@ -577,6 +748,20 @@ function terminarRuta() {
             span.textContent = p.nombre + ': ' + p.cantidad;
             prodWrap.appendChild(span);
         });
+
+        // Garrafones vacíos
+        const vaciosWrap = document.getElementById('res-vacios');
+        vaciosWrap.innerHTML = '';
+        if (data.garrafones_vacios && data.garrafones_vacios.length > 0) {
+            data.garrafones_vacios.forEach(gv => {
+                const span = document.createElement('span');
+                span.style.cssText = 'background:#ecfdf5;color:#065f46;border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:700;border:1px solid #bbf7d0;';
+                span.innerHTML = '<i class="fas fa-recycle me-1"></i>' + gv.nombre + ': ' + gv.cantidad;
+                vaciosWrap.appendChild(span);
+            });
+        } else {
+            vaciosWrap.innerHTML = '<span style="color:#9ca3af;font-size:.8rem;">Ninguno registrado</span>';
+        }
 
         // Clientes
         const cliWrap = document.getElementById('res-clientes-lista');

@@ -65,7 +65,19 @@ class RepartidorDashboardController extends Controller
         // Leer ganancia acumulada desde sesión
         $gananciaTotal = session('ruta_' . $id . '_ganancia', session('ganancias_ruta_' . $id, 0));
 
-        return view('repartidor.ruta', compact('asignacion', 'ruta', 'clientesData', 'gananciaTotal', 'user'));
+        // Stock de garrafones persistido (o el original si no hay sesión aún)
+        $garrafonesRaw = is_object($asignacion) ? (array)($asignacion->garrafones ?? []) : (array)($asignacion['garrafones'] ?? []);
+        $stockKey = 'ruta_' . $id . '_stock_garrafones';
+        $garrafonesStock = session($stockKey, collect($garrafonesRaw)->map(fn($g) => [
+            'nombre'   => is_array($g) ? ($g['nombre'] ?? 'Producto') : 'Producto',
+            'cantidad' => (int)(is_array($g) ? ($g['cantidad'] ?? 0) : 0),
+        ])->toArray());
+
+        // Obtener insumos para selector de garrafones vacíos
+        $insumosRes  = $this->pythonApi->getInsumos();
+        $insumosList = collect($insumosRes['success'] ? $insumosRes['data'] : [])->map(fn($i) => (object)$i);
+
+        return view('repartidor.ruta', compact('asignacion', 'ruta', 'clientesData', 'gananciaTotal', 'user', 'garrafonesStock', 'insumosList'));
     }
 
     public function registrarVentaRuta(Request $request)
@@ -77,7 +89,8 @@ class RepartidorDashboardController extends Controller
             'cliente_nombre'  => 'required|string',
             'cantidad'        => 'required|numeric|min:1',
             'precio'          => 'required|numeric|min:0',
-            'garrafones'      => 'nullable|array',  // [{nombre, cantidad}] de la asignación
+            'garrafones'      => 'nullable|array',
+            'garrafones_vacios' => 'nullable|array',  // [{id, nombre, cantidad}]
         ]);
 
         $response = $this->pythonApi->marcarEntrega(
@@ -95,6 +108,28 @@ class RepartidorDashboardController extends Controller
         // Acumular ganancia
         session([$keyBase . '_ganancia' => session($keyBase . '_ganancia', 0) + $total]);
 
+        // Descontar garrafones del stock en sesión
+        $stockKey = $keyBase . '_stock_garrafones';
+        // Inicializar desde la asignación si no existe aún en sesión
+        if (!session()->has($stockKey)) {
+            $stockInicial = collect($request->garrafones ?? [])->map(fn($g) => [
+                'nombre'   => $g['nombre'] ?? 'Producto',
+                'cantidad' => (int)($g['cantidad'] ?? 0),
+            ])->toArray();
+            session([$stockKey => $stockInicial]);
+        }
+        $stock = session($stockKey);
+        $restante = (int)$request->cantidad;
+        foreach ($stock as &$g) {
+            if ($restante <= 0) break;
+            $descuento = min($g['cantidad'], $restante);
+            $g['cantidad'] -= $descuento;
+            $restante -= $descuento;
+        }
+        unset($g);
+        session([$stockKey => $stock]);
+
+
         // Acumular clientes atendidos
         $clientes = session($keyBase . '_clientes', []);
         $clientes[] = ['nombre' => $request->cliente_nombre, 'total' => $total];
@@ -109,10 +144,26 @@ class RepartidorDashboardController extends Controller
         }
         session([$keyBase . '_productos' => $productos]);
 
+        // Acumular garrafones vacíos recibidos en esta entrega
+        $vacios = session($keyBase . '_garrafones_vacios', []);
+        foreach ($request->garrafones_vacios ?? [] as $gv) {
+            $gvId     = $gv['id']     ?? '';
+            $gvNombre = $gv['nombre'] ?? 'Insumo';
+            $gvCant   = (int)($gv['cantidad'] ?? 0);
+            if ($gvCant <= 0 || !$gvId) continue;
+            if (isset($vacios[$gvId])) {
+                $vacios[$gvId]['cantidad'] += $gvCant;
+            } else {
+                $vacios[$gvId] = ['id' => $gvId, 'nombre' => $gvNombre, 'cantidad' => $gvCant];
+            }
+        }
+        session([$keyBase . '_garrafones_vacios' => $vacios]);
+
         return response()->json([
             'success'        => true,
             'total'          => $total,
             'ganancia_total' => session($keyBase . '_ganancia'),
+            'stock_garrafones'  => session($stockKey),
         ]);
     }
 
@@ -124,9 +175,10 @@ class RepartidorDashboardController extends Controller
         $keyBase = 'ruta_' . $id;
         $user    = auth()->guard('usuarios')->user();
 
-        $ganancia  = session($keyBase . '_ganancia', 0);
-        $clientes  = session($keyBase . '_clientes', []);
-        $productos = session($keyBase . '_productos', []);
+        $ganancia       = session($keyBase . '_ganancia', 0);
+        $clientes       = session($keyBase . '_clientes', []);
+        $productos      = session($keyBase . '_productos', []);
+        $garrafonesVacios = session($keyBase . '_garrafones_vacios', []);
 
         // Marcar asignación como finalizada
         $this->pythonApi->updateAsignacionRuta($id, ['estado' => 'finalizada']);
@@ -148,16 +200,33 @@ class RepartidorDashboardController extends Controller
             'fecha'             => now()->toISOString(),
         ]);
 
+        // Sumar garrafones vacíos al inventario de insumos
+        foreach ($garrafonesVacios as $gv) {
+            $insumoRes = $this->pythonApi->getInsumo($gv['id']);
+            if ($insumoRes['success'] && isset($insumoRes['data'])) {
+                $insumo = $insumoRes['data'];
+                $nuevaCantidad = (int)($insumo['cantidad'] ?? 0) + (int)$gv['cantidad'];
+                $this->pythonApi->updateInsumo($gv['id'], [
+                    'nombre'          => $insumo['nombre']          ?? $gv['nombre'],
+                    'descripcion'     => $insumo['descripcion']     ?? '',
+                    'unidad_medida'   => $insumo['unidad_medida']   ?? 'Piezas',
+                    'cantidad'        => $nuevaCantidad,
+                    'cantidad_minima' => $insumo['cantidad_minima'] ?? 0,
+                ]);
+            }
+        }
+
         // Limpiar sesión de esta ruta
-        session()->forget([$keyBase . '_ganancia', $keyBase . '_clientes', $keyBase . '_productos']);
+        session()->forget([$keyBase . '_ganancia', $keyBase . '_clientes', $keyBase . '_productos', $keyBase . '_stock_garrafones', $keyBase . '_garrafones_vacios']);
         // Mantener clave legacy por compatibilidad
         session()->forget('ganancias_ruta_' . $id);
 
         return response()->json([
-            'success'   => true,
-            'ganancia'  => $ganancia,
-            'clientes'  => $clientes,
-            'productos' => $productosArr,
+            'success'           => true,
+            'ganancia'          => $ganancia,
+            'clientes'          => $clientes,
+            'productos'         => $productosArr,
+            'garrafones_vacios' => array_values($garrafonesVacios),
         ]);
     }
 
